@@ -16,6 +16,7 @@
 import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import AccessibilityPanel from './accessibility/AccessibilityPanel'
 import ConfirmModal from './ui/ConfirmModal'
 
 /** Enlaces publicos del sitio. */
@@ -46,7 +47,7 @@ export default function Navbar() {
     <header className="navbar">
       <div className="app-container flex items-center justify-between gap-4 py-3">
         {/* Marca */}
-        <Link to="/" className="flex items-center gap-3 shrink-0" onClick={() => setMenuOpen(false)}>
+        <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setMenuOpen(false)}>
           <span
             className="grid place-items-center rounded"
             style={{
@@ -60,11 +61,11 @@ export default function Navbar() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6-10l6-3m6 3l-5.447-2.724A1 1 0 0115 4.618v10.764a1 1 0 01-.553.894L9 19" />
             </svg>
           </span>
-          <span className="leading-none">
-            <span className="heading-display block text-lg" style={{ color: 'var(--accent)' }}>
+          <span className="min-w-0 leading-none">
+            <span className="heading-display block whitespace-nowrap text-lg" style={{ color: 'var(--accent)' }}>
               LEYENDAS CR
             </span>
-            <span className="block text-muted" style={{ fontSize: '0.62rem', letterSpacing: '0.25em' }}>
+            <span className="block text-muted" style={{ fontSize: '0.62rem', letterSpacing: '0.12em' }}>
               MAPAS DEL MAS ALLA
             </span>
           </span>
@@ -113,13 +114,15 @@ export default function Navbar() {
         </div>
 
         {/* Boton de menu (movil) */}
+        <AccessibilityPanel />
         <button
           type="button"
-          className="lg:hidden btn-base btn-ghost"
+          className="lg:hidden btn-base btn-ghost shrink-0"
           onClick={() => setMenuOpen((prev) => !prev)}
           aria-expanded={menuOpen}
           aria-controls="menu-movil"
-          aria-label="Abrir menu de navegacion"
+          aria-label={menuOpen ? 'Cerrar menu de navegacion' : 'Abrir menu de navegacion'}
+          title={menuOpen ? 'Cerrar menu de navegacion' : 'Abrir menu de navegacion'}
         >
           {menuOpen ? (
             <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>

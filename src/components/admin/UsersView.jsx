@@ -7,7 +7,7 @@
  */
 
 import { useEffect, useMemo, useState } from 'react'
-import { getUsers, getRoles } from '../../services/dbService'
+import { createUser, getUsers, getRoles, updateUserRole } from '../../services/dbService'
 import { useToast } from '../../context/ToastContext'
 
 const ROLE_COLORS = { usuario: 'var(--accent)', moderador: 'var(--color-alert)', admin: 'var(--color-danger)' }
@@ -17,14 +17,17 @@ export default function UsersView() {
   const [roles, setRoles] = useState([])
   const [search, setSearch] = useState('')
   const [roleFilter, setRoleFilter] = useState('todos')
+  const [createOpen, setCreateOpen] = useState(false)
+  const [creating, setCreating] = useState(false)
+  const [newUser, setNewUser] = useState({ displayName: '', username: '', email: '', password: '', province: 'San José', role: 'usuario' })
   const toast = useToast()
 
   useEffect(() => {
     Promise.all([getUsers(), getRoles()]).then(([list, roleList]) => {
       setUsers(list)
       setRoles(roleList)
-    })
-  }, [])
+    }).catch((error) => toast.error('No se pudieron cargar las cuentas', error.message))
+  }, [toast])
 
   /** Filtra por texto y por rol. */
   const filtered = useMemo(() => {
@@ -42,14 +45,74 @@ export default function UsersView() {
    * Cambio de rol simulado: en un backend real seria
    *   await fetch(`/api/users/${id}/role`, { method: 'PATCH', ... })
    */
-  const changeRole = (id, nextRole) => {
-    setUsers((prev) => prev.map((user) => (user.id === id ? { ...user, role: nextRole } : user)))
-    const target = users.find((user) => user.id === id)
-    toast.success('Rol actualizado', `${target?.displayName || 'Usuario'} ahora es ${nextRole}.`)
+  const changeRole = async (id, nextRole) => {
+    try {
+      const updated = await updateUserRole(id, nextRole)
+      setUsers((prev) => prev.map((user) => (user.id === id ? updated : user)))
+      toast.success('Rol actualizado', `${updated.displayName} ahora es ${nextRole}.`)
+    } catch (error) {
+      toast.error('No se pudo cambiar el rol', error.message)
+    }
+  }
+
+  const handleCreateUser = async (event) => {
+    event.preventDefault()
+    setCreating(true)
+    try {
+      const created = await createUser(newUser)
+      setUsers((prev) => [...prev, created])
+      setNewUser({ displayName: '', username: '', email: '', password: '', province: 'San José', role: 'usuario' })
+      setCreateOpen(false)
+      toast.success('Cuenta creada', `${created.displayName} se guardó en la base de datos.`)
+    } catch (error) {
+      toast.error('No se pudo crear la cuenta', error.message)
+    } finally {
+      setCreating(false)
+    }
   }
 
   return (
     <div className="flex flex-col gap-4">
+      <div className="flex justify-end">
+        <button type="button" className="btn-base btn-solid" onClick={() => setCreateOpen((open) => !open)}>
+          {createOpen ? 'Cancelar' : 'Crear usuario'}
+        </button>
+      </div>
+
+      {createOpen && (
+        <form className="panel grid gap-3 sm:grid-cols-2" onSubmit={handleCreateUser}>
+          <div>
+            <label className="field-label" htmlFor="new-display-name">Nombre visible</label>
+            <input id="new-display-name" className="field-input" required value={newUser.displayName} onChange={(event) => setNewUser((prev) => ({ ...prev, displayName: event.target.value }))} />
+          </div>
+          <div>
+            <label className="field-label" htmlFor="new-username">Usuario</label>
+            <input id="new-username" className="field-input" required minLength={3} value={newUser.username} onChange={(event) => setNewUser((prev) => ({ ...prev, username: event.target.value }))} />
+          </div>
+          <div>
+            <label className="field-label" htmlFor="new-email">Correo</label>
+            <input id="new-email" type="email" className="field-input" required value={newUser.email} onChange={(event) => setNewUser((prev) => ({ ...prev, email: event.target.value }))} />
+          </div>
+          <div>
+            <label className="field-label" htmlFor="new-password">Contraseña temporal</label>
+            <input id="new-password" type="password" className="field-input" required minLength={6} autoComplete="new-password" value={newUser.password} onChange={(event) => setNewUser((prev) => ({ ...prev, password: event.target.value }))} />
+          </div>
+          <div>
+            <label className="field-label" htmlFor="new-province">Provincia</label>
+            <input id="new-province" className="field-input" value={newUser.province} onChange={(event) => setNewUser((prev) => ({ ...prev, province: event.target.value }))} />
+          </div>
+          <div>
+            <label className="field-label" htmlFor="new-role">Rol inicial</label>
+            <select id="new-role" className="field-select" value={newUser.role} onChange={(event) => setNewUser((prev) => ({ ...prev, role: event.target.value }))}>
+              {roles.map((role) => <option key={role.id} value={role.id}>{role.label}</option>)}
+            </select>
+          </div>
+          <button type="submit" className="btn-base btn-solid justify-self-start sm:col-span-2" disabled={creating}>
+            {creating ? 'Guardando...' : 'Guardar usuario'}
+          </button>
+        </form>
+      )}
+
       {/* Filtros */}
       <div className="panel flex flex-col sm:flex-row gap-3 items-end">
         <div className="flex-1">

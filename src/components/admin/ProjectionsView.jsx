@@ -1,7 +1,7 @@
 /**
  * components/admin/ProjectionsView.jsx
  * -----------------------------------------------------------------------------
- * Modulo de proyecciones impulsado por una IA SIMULADA.
+ * Modulo de proyecciones impulsado por DeepSeek.
  *
  * Dos bloques:
  *   1. Consumo agregado de la IA (barras horizontales por usuario).
@@ -19,6 +19,137 @@ import { getAiUsage } from '../../services/metricsService'
 import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../context/ToastContext'
 import { LineChart, HorizontalBarChart } from './Charts'
+
+const EXPORT_FORMATS = [
+  { id: 'pdf', label: 'PDF (guardar desde imprimir)' },
+  { id: 'word', label: 'Word (.doc)' },
+  { id: 'excel', label: 'Excel (.xls)' },
+  { id: 'csv', label: 'CSV (.csv)' },
+  { id: 'json', label: 'JSON (.json)' },
+  { id: 'txt', label: 'Texto (.txt)' },
+  { id: 'html', label: 'HTML (.html)' },
+]
+
+function createReport(user, usageStats, aggregate, projection) {
+  return {
+    title: 'Informe de proyecciones de IA',
+    exportedAt: new Date().toISOString(),
+    account: user?.displayName || user?.username || user?.email || 'No disponible',
+    dailyUsage: usageStats,
+    aggregateUsage: aggregate,
+    projection: projection
+      ? {
+          model: projection.model,
+          generatedAt: projection.generatedAt,
+          horizonDays: projection.horizonDays,
+          growthRate: projection.growthRate,
+          projectedReach: projection.projectedReach,
+          confidence: projection.confidence,
+          riskLevel: projection.riskLevel,
+          factors: projection.factors,
+          series: projection.series,
+          recommendations: projection.recommendations,
+          disclaimer: projection.disclaimer,
+        }
+      : null,
+  }
+}
+
+function createReportRows(report) {
+  const rows = [
+    ['Informe', 'Fecha de exportacion', report.exportedAt],
+    ['Informe', 'Cuenta', report.account],
+    ...Object.entries(report.dailyUsage).map(([key, value]) => ['Uso diario', key, value]),
+  ]
+
+  report.aggregateUsage.forEach((item, index) => {
+    Object.entries(item).forEach(([key, value]) => {
+      rows.push(['Consumo agregado', `Cuenta ${index + 1} - ${key}`, value])
+    })
+  })
+
+  if (!report.projection) {
+    rows.push(['Proyeccion', 'Estado', 'No se ha generado una proyeccion'])
+    return rows
+  }
+
+  Object.entries(report.projection).forEach(([key, value]) => {
+    if (['factors', 'series', 'recommendations', 'disclaimer'].includes(key)) return
+    rows.push(['Proyeccion', key, value])
+  })
+  Object.entries(report.projection.factors || {}).forEach(([key, value]) => {
+    rows.push(['Factores', key, value])
+  })
+  ;(report.projection.series || []).forEach((item, index) => {
+    Object.entries(item).forEach(([key, value]) => {
+      rows.push(['Serie proyectada', `${item.month || index + 1} - ${key}`, value])
+    })
+  })
+  ;(report.projection.recommendations || []).forEach((item, index) => {
+    rows.push(['Recomendacion', `${index + 1} - ${item.title}`, `${item.detail} (impacto: ${item.impact})`])
+  })
+  rows.push(['Proyeccion', 'Aviso', report.projection.disclaimer])
+  return rows
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (character) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  })[character])
+}
+
+function createReportHtml(title, rows, autoPrint = false) {
+  const tableRows = rows
+    .map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`)
+    .join('')
+
+  return `<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>${escapeHtml(title)}</title>
+<style>body{font-family:Arial,sans-serif;color:#202820;margin:32px}h1{font-size:22px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #aab4a8;padding:8px;text-align:left;overflow-wrap:anywhere}th{background:#e8eee8}tr:nth-child(even){background:#f5f7f4}@media print{body{margin:16mm}h1{font-size:18px}tr{break-inside:avoid}}</style>
+</head><body><h1>${escapeHtml(title)}</h1><table><thead><tr><th>Seccion</th><th>Dato</th><th>Valor</th></tr></thead><tbody>${tableRows}</tbody></table>
+${autoPrint ? '<script>window.addEventListener("load",()=>window.print())</script>' : ''}</body></html>`
+}
+
+function downloadFile(content, mimeType, extension) {
+  const fileName = `proyecciones-ia-${new Date().toISOString().replace(/[:.]/g, '-')}.${extension}`
+  const url = URL.createObjectURL(new Blob([content], { type: mimeType }))
+  const link = document.createElement('a')
+  link.href = url
+  link.download = fileName
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+  URL.revokeObjectURL(url)
+}
+
+function exportReport(format, report, rows) {
+  const title = report.title
+  const html = createReportHtml(title, rows)
+
+  if (format === 'pdf') {
+    const printWindow = window.open(URL.createObjectURL(new Blob([createReportHtml(title, rows, true)], { type: 'text/html' })), '_blank')
+    if (!printWindow) window.alert('Permite las ventanas emergentes para guardar el informe como PDF.')
+    return
+  }
+  if (format === 'word') return downloadFile(`\ufeff${html}`, 'application/msword;charset=utf-8', 'doc')
+  if (format === 'excel') return downloadFile(`\ufeff${html}`, 'application/vnd.ms-excel;charset=utf-8', 'xls')
+  if (format === 'csv') {
+    const csv = [['Seccion', 'Dato', 'Valor'], ...rows]
+      .map((row) => row.map((cell) => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(','))
+      .join('\r\n')
+    return downloadFile(`\ufeff${csv}`, 'text/csv;charset=utf-8', 'csv')
+  }
+  if (format === 'json') return downloadFile(JSON.stringify(report, null, 2), 'application/json;charset=utf-8', 'json')
+  if (format === 'txt') {
+    const text = [title, ...rows.map(([section, label, value]) => `${section} | ${label}: ${value ?? ''}`)].join('\r\n')
+    return downloadFile(text, 'text/plain;charset=utf-8', 'txt')
+  }
+  downloadFile(html, 'text/html;charset=utf-8', 'html')
+}
 
 export default function ProjectionsView() {
   const { user } = useAuth()
@@ -60,9 +191,32 @@ export default function ProjectionsView() {
   }
 
   const usedPercent = usageStats.limit > 0 ? (usageStats.used / usageStats.limit) * 100 : 0
+  const report = createReport(user, usageStats, aggregate, projection)
+  const reportRows = createReportRows(report)
 
   return (
     <div className="flex flex-col gap-5">
+      <div className="flex justify-end">
+        <details className="relative">
+          <summary className="btn-base btn-ghost cursor-pointer list-none">Descargar informe</summary>
+          <div className="panel absolute right-0 z-20 mt-2 flex min-w-60 flex-col gap-1 p-2">
+            {EXPORT_FORMATS.map((format) => (
+              <button
+                key={format.id}
+                type="button"
+                className="btn-base btn-ghost w-full justify-start"
+                onClick={(event) => {
+                  exportReport(format.id, report, reportRows)
+                  event.currentTarget.closest('details').open = false
+                }}
+              >
+                {format.label}
+              </button>
+            ))}
+          </div>
+        </details>
+      </div>
+
       {/* Consumo agregado */}
       <section className="panel">
         <h2 className="panel-title">Consumo de la IA por cuenta</h2>
@@ -78,8 +232,7 @@ export default function ProjectionsView() {
           <div>
             <h2 className="panel-title">Proyeccion personalizada</h2>
             <p className="panel-subtitle">
-              El modelo `leyendas-oracle-v1` estima el crecimiento de tu actividad en la
-              comunidad a 60 dias.
+              DeepSeek estima el crecimiento de tu actividad en la comunidad a 60 dias.
             </p>
           </div>
 

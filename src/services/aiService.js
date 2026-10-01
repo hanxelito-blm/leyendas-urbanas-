@@ -21,7 +21,7 @@
  */
 
 import db from '../data/db.json'
-import { readDailyValue, writeDailyValue } from './storage'
+import { readDailyValue, readValue, writeDailyValue } from './storage'
 
 const USAGE_PREFIX = 'ai-usage-'
 
@@ -60,30 +60,25 @@ export async function generateProjection({ user, factors } = {}) {
     )
   }
 
-  // Registra el uso ANTES de calcular: si el calculo falla, el intento cuenta.
+  const profile = computeFactors(user, factors)
+  const session = readValue('session', null)
+  const response = await fetch('/api/ai/projection', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(session?.token ? { Authorization: `Bearer ${session.token}` } : {}),
+    },
+    body: JSON.stringify({ factors: profile }),
+  })
+  const result = await response.json()
+  if (!response.ok) throw new Error(result.message || 'No se pudo generar la proyección con DeepSeek.')
+
   const nextUsed = usage.used + 1
   writeDailyValue(USAGE_PREFIX + user.id, nextUsed)
-
-  // Retardo simulado para representar la latencia de un modelo real.
-  await new Promise((resolve) => setTimeout(resolve, 900))
-
-  const weights = db.aiConfig.weights
-  const profile = computeFactors(user, factors)
-  const { projection, series, confidence, horizonDays } = project(profile, weights, nextUsed)
-
   return {
-    model: db.aiConfig.model,
-    generatedAt: new Date().toISOString(),
-    horizonDays,
-    confidence,
+    ...result,
     factors: profile,
-    weights,
     usage: { used: nextUsed, limit: usage.limit, remaining: usage.limit - nextUsed },
-    ...projection,
-    series,
-    recommendations: buildRecommendations(profile, user),
-    disclaimer:
-      'Proyeccion simulada basada en el comportamiento local del usuario. No es una prediccion real de mercado.',
   }
 }
 

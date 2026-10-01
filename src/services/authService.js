@@ -14,6 +14,16 @@ const USERS_KEY = 'registered-users'
 
 const delay = (ms = 450) => new Promise((resolve) => setTimeout(resolve, ms))
 
+async function requestAuth(path, payload) {
+  const response = await fetch(path, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+  const result = await response.json()
+  return { response, result }
+}
+
 function sanitize(user) {
   const { password, ...safe } = user
   return safe
@@ -44,20 +54,14 @@ export async function login({ identifier, password }) {
     return { success: false, message: 'Completa tu usuario y tu contraseña.' }
   }
 
-  const user = findUser(identifier)
-
-  if (!user) {
-    return { success: false, message: 'No existe una cuenta con ese identificador.' }
+  try {
+    const { response, result } = await requestAuth('/api/auth/login', { identifier, password })
+    if (!response.ok) return { success: false, message: result.message || 'No se pudo iniciar sesión.' }
+    writeValue(SESSION_KEY, { user: result.user, token: result.token, issuedAt: Date.now() })
+    return result
+  } catch {
+    return { success: false, message: 'No se pudo conectar con el servidor de cuentas.' }
   }
-
-  if (user.password !== password) {
-    return { success: false, message: 'La contraseña no coincide con nuestros registros.' }
-  }
-
-  const session = { user: sanitize(user), token: buildToken(user.id), issuedAt: Date.now() }
-  writeValue(SESSION_KEY, session)
-
-  return { success: true, user: session.user, token: session.token }
 }
 
 export async function register({
@@ -73,7 +77,7 @@ export async function register({
 
   const cleanUsername = String(username || '').trim()
   const cleanEmail = String(email || '').trim().toLowerCase()
-  const cleanName = String(displayName || '').trim()
+  let cleanName = String(displayName || '').trim()
   const cleanIdentificacion = String(identificacion || '').trim()
 
   if (cleanUsername.length < 3) {
@@ -130,38 +134,22 @@ export async function register({
     birthDateParsed = birthDate
   }
 
-  const newUser = {
-    id: `u-${Date.now().toString(36)}`,
-    username: cleanUsername,
-    email: cleanEmail,
-    password,
-    displayName: cleanName,
-    role: 'usuario',
-    avatar: '/images/la-segua.jpg',
-    bio: 'Nuevo miembro de la comunidad de LEYENDAS CR.',
-    province: province || 'San José',
-    joinedAt: new Date().toISOString().slice(0, 10),
-    reputation: 0,
-    badges: ['Nuevo miembro'],
-    stats: { posts: 0, comments: 0, legendsVisited: 0 },
-    // Nuevos campos de edad
-    age,
-    isAdult,
-    birthDate: birthDateParsed,
-    identificacion: cleanIdentificacion || null,
-  }
-
-  writeValue(USERS_KEY, [...getRegisteredUsers(), newUser])
-  writeValue(SESSION_KEY, {
-    user: sanitize(newUser),
-    token: buildToken(newUser.id),
-    issuedAt: Date.now(),
-  })
-
-  return { 
-    success: true, 
-    user: sanitize(newUser),
-    ageWarning: !isAdult ? `Eres menor de edad (${age} años). Algunas zonas peligrosas estarán restringidas.` : null
+  try {
+    const { response, result } = await requestAuth('/api/auth/register', {
+      username: cleanUsername,
+      email: cleanEmail,
+      password,
+      displayName: cleanName,
+      province,
+      age,
+      isAdult,
+      birthDate: birthDateParsed,
+    })
+    if (!response.ok) return { success: false, message: result.message || 'No se pudo crear la cuenta.' }
+    writeValue(SESSION_KEY, { user: result.user, token: result.token, issuedAt: Date.now() })
+    return result
+  } catch {
+    return { success: false, message: 'No se pudo conectar con el servidor de cuentas.' }
   }
 }
 

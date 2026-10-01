@@ -1382,17 +1382,16 @@ button[type="button"].btn-medieval:hover::before {
   }
 }
 
-/* En modo claro la superficie general se aclara para ganar legibilidad sin
-   recurrir al blanco puro. */
+/* El modo claro conserva la paleta oscura del archivo y eleva sus superficies. */
 html[data-theme='light'] body {
   background-image:
-    radial-gradient(ellipse 70% 50% at 20% 20%, rgba(42, 255, 224, 0.05) 0%, transparent 100%),
-    linear-gradient(180deg, #101c18 0%, #16261f 50%, #101c18 100%);
+    radial-gradient(ellipse 70% 50% at 20% 20%, rgba(85, 230, 175, 0.045) 0%, transparent 100%),
+    linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-surface) 50%, var(--bg-base) 100%);
 }
 
 html[data-theme='light'] .menu-horror-bg,
 html[data-theme='light'] .horror-bg-fixed {
-  opacity: 0.45;
+  opacity: 0.24;
 }
 
 /* El mapa mantiene su color real salvo en modo daltonismo, donde se aplica

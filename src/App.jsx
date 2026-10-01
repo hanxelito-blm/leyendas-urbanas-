@@ -12,7 +12,6 @@ import { ToastProvider } from './context/ToastContext'
 import AppRoutes from './routes/AppRoutes'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import AccessibilityPanel from './components/accessibility/AccessibilityPanel'
 import ColorBlindFilters from './components/accessibility/ColorBlindFilters'
 import OnboardingToasts from './components/onboarding/OnboardingToasts'
 import MedievalHorrorBackground from './components/MedievalHorrorBackground'
@@ -42,9 +41,6 @@ function AppContent() {
           <Footer />
         </div>
       )}
-
-      {/* Boton flotante de accesibilidad visual */}
-      <AccessibilityPanel />
 
       {/* Guia inicial: avisos flotantes al ingresar por primera vez */}
       <OnboardingToasts />

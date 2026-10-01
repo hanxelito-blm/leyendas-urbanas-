@@ -116,7 +116,7 @@ export default function HomePage() {
             <Link
               key={entry.to}
               to={entry.to}
-              className="card-surface p-5 flex flex-col gap-2 hover:border-[#00F5D4] transition-all hover:scale-[1.01]"
+              className="card-surface min-w-0 p-5 flex flex-col gap-2 hover:border-[#00F5D4] transition-all hover:scale-[1.01]"
             >
               <div className="flex items-center justify-between">
                 {entry.icon}
@@ -152,10 +152,10 @@ export default function HomePage() {
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {categories.map((category) => (
-              <li key={category.id}>
+              <li key={category.id} className="min-w-0">
                 <Link
                   to="/comunidad"
-                  className="card-surface p-4 flex flex-col gap-2 hover:border-[#00F5D4] transition-all hover:scale-[1.01]"
+                  className="card-surface block w-full min-w-0 p-4 hover:border-[#00F5D4] transition-all hover:scale-[1.01]"
                 >
                   <div className="flex items-center gap-3">
                     <span
@@ -167,11 +167,11 @@ export default function HomePage() {
                         flexShrink: 0,
                       }}
                     />
-                    <div className="flex-1 min-w-0">
-                      <h3 className="heading-gothic text-accent text-sm truncate">
+                    <div className="flex-1 min-w-0 break-words">
+                      <h3 className="heading-gothic text-accent text-sm whitespace-normal break-words">
                         {category.name}
                       </h3>
-                      <p className="text-muted text-xs truncate">
+                      <p className="text-muted text-xs whitespace-normal break-words">
                         {category.description}
                       </p>
                     </div>

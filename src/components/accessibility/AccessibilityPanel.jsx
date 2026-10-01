@@ -13,19 +13,23 @@
  */
 
 import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { COLOR_MODES, useAccessibility } from '../../context/AccessibilityContext'
 
 export default function AccessibilityPanel() {
+  const location = useLocation()
   const [open, setOpen] = useState(false)
   const panelRef = useRef(null)
   const buttonRef = useRef(null)
   const {
     theme,
+    voiceNarration,
     fontScale,
     colorMode,
     highContrast,
     fontScaleLabel,
-    toggleTheme,
+    setTheme,
+    toggleVoiceNarration,
     stepFontScale,
     setFontScale,
     setColorMode,
@@ -35,6 +39,50 @@ export default function AccessibilityPanel() {
 
   /** Escalas disponibles, en el mismo orden que el control deslizante. */
   const FONT_SCALES = [0.875, 1, 1.125, 1.25, 1.5]
+
+  useEffect(() => {
+    if (!('speechSynthesis' in window)) return undefined
+    const speech = window.speechSynthesis
+    speech.cancel()
+    if (!voiceNarration) return undefined
+
+    let cancelled = false
+    const speakHeading = () => {
+      if (cancelled) return
+      const heading = document.querySelector('main h1, main h2')?.textContent?.trim()
+      if (!heading) return
+
+      const spanishVoices = speech.getVoices().filter((voice) => voice.lang.toLowerCase().startsWith('es'))
+      const latinoVoices = spanishVoices.filter((voice) =>
+        /^es-(419|mx|ar|bo|cl|co|cr|cu|do|ec|sv|gt|hn|ni|pa|py|pe|pr|us|uy|ve)(-|$)/i.test(voice.lang) ||
+        /latino|latin american|mexico|argentina|colombia|costa rica/i.test(voice.name)
+      )
+      const voicePool = latinoVoices.length ? latinoVoices : spanishVoices
+      const deepVoice = voicePool.find((voice) => /male|masculino|jorge|david|pablo|diego|raul|raúl|alvaro|álvaro|enrique/i.test(voice.name))
+      const narration = new SpeechSynthesisUtterance(heading)
+      narration.lang = deepVoice?.lang || voicePool[0]?.lang || 'es-419'
+      narration.pitch = 0
+      narration.rate = 0.9
+      narration.volume = 0.9
+      narration.voice = deepVoice || spanishVoices[0] || null
+      speech.speak(narration)
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      if (speech.getVoices().length > 0) {
+        speakHeading()
+      } else {
+        speech.addEventListener('voiceschanged', speakHeading, { once: true })
+      }
+    }, 350)
+
+    return () => {
+      cancelled = true
+      window.clearTimeout(timeoutId)
+      speech.removeEventListener('voiceschanged', speakHeading)
+      speech.cancel()
+    }
+  }, [location.pathname, voiceNarration])
 
   /* Cierra el panel al pulsar Escape o al hacer clic fuera de el. */
   useEffect(() => {
@@ -67,22 +115,17 @@ export default function AccessibilityPanel() {
       <button
         ref={buttonRef}
         type="button"
-        className="a11y-fab"
+        className="a11y-nav-button"
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
         aria-haspopup="dialog"
         aria-label="Abrir ajustes de accesibilidad visual"
         title="Accesibilidad visual"
       >
-        {theme === 'dark' ? (
-          <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        ) : (
-          <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-        )}
+        <svg width="21" height="21" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.7}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12s3.25-6 9.75-6 9.75 6 9.75 6-3.25 6-9.75 6-9.75-6-9.75-6Z" />
+          <circle cx="12" cy="12" r="2.5" />
+        </svg>
       </button>
 
       {open && (
@@ -95,27 +138,38 @@ export default function AccessibilityPanel() {
           {/* ── Tema ─────────────────────────────────────────────────────── */}
           <div className="a11y-group">
             <h3 className="field-label">Modo de visualizacion</h3>
-            <button type="button" className="a11y-option" onClick={toggleTheme} aria-pressed={false}>
-              <span>{theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}</span>
-              <span className="badge">{theme === 'dark' ? 'Oscuro profundo' : 'Claro elegante'}</span>
-            </button>
-            <div className="flex gap-2 mt-2">
+            <div className="flex gap-2">
               {[
-                { id: 'dark', label: 'Oscuro' },
-                { id: 'light', label: 'Claro' },
+                { id: 'dark', label: 'Oscuro', swatch: '#020403' },
+                { id: 'light', label: 'Claro', swatch: '#26392f' },
               ].map((option) => (
                 <button
                   key={option.id}
                   type="button"
                   className="a11y-option flex-1"
                   aria-pressed={theme === option.id}
-                  onClick={() => (theme === option.id ? null : toggleTheme())}
+                  onClick={() => setTheme(option.id)}
                 >
-                  <span className="a11y-swatch" style={{ background: option.id === 'dark' ? '#020403' : '#243b31' }} />
+                  <span className="a11y-swatch" style={{ background: option.swatch }} />
                   <span>{option.label}</span>
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* ── Voz ──────────────────────────────────────────────────────── */}
+          <div className="a11y-group">
+            <h3 className="field-label">Narración</h3>
+            <button
+              type="button"
+              className="a11y-option"
+              onClick={toggleVoiceNarration}
+              aria-pressed={voiceNarration}
+              disabled={!('speechSynthesis' in window)}
+            >
+              <span>Voz tenebrosa por página</span>
+              <span className="badge">{voiceNarration ? 'Activa' : 'Inactiva'}</span>
+            </button>
           </div>
 
           {/* ── Tamano del texto ─────────────────────────────────────────── */}

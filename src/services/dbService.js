@@ -14,6 +14,7 @@
  */
 
 import db from '../data/db.json'
+import { readValue } from './storage'
 
 /* ── Utilidades de copia profunda ──────────────────────────────────────────── */
 
@@ -91,7 +92,36 @@ export async function getTopLegends(limit = 5) {
 
 /** Lista de usuarios (sin el campo de contrasena). */
 export async function getUsers() {
-  return clone(db.users.map(stripPassword))
+  return requestUserApi('/api/users')
+}
+
+export async function createUser(user) {
+  return requestUserApi('/api/users', {
+    method: 'POST',
+    body: JSON.stringify(user),
+  })
+}
+
+export async function updateUserRole(id, role) {
+  return requestUserApi(`/api/users/${encodeURIComponent(id)}/role`, {
+    method: 'PATCH',
+    body: JSON.stringify({ role }),
+  })
+}
+
+async function requestUserApi(url, options = {}) {
+  const session = readValue('session', null)
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(session?.token ? { Authorization: `Bearer ${session.token}` } : {}),
+      ...options.headers,
+    },
+  })
+  const result = await response.json()
+  if (!response.ok) throw new Error(result.message || 'No se pudo actualizar la lista de usuarios.')
+  return result
 }
 
 /** Busca un usuario por nombre de usuario o correo. */

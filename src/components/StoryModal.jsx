@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 const CHOICES = [
   ['A', 'Seguir al jinete en la penumbra', 'B', 'Encender un fósforo y mirar su rostro'],
@@ -162,7 +163,7 @@ function StoryModal({ legend, onClose, isDiscovered }) {
           ? { bg: 'rgba(224,169,59,0.12)', border: 'rgba(224,169,59,0.45)', text: '#eab308' }
           : { bg: 'rgba(59,206,122,0.12)', border: 'rgba(59,206,122,0.45)', text: '#3BCE7A' }
 
-  return (
+  return createPortal(
     <div className="modal-overlay" onClick={onClose} aria-hidden="true">
       <div
         ref={modalRef}
@@ -170,7 +171,7 @@ function StoryModal({ legend, onClose, isDiscovered }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="legend-title"
-        className="relative w-[96%] max-w-[960px] my-auto rounded-2xl border border-[rgba(0,245,212,0.3)] shadow-[0_0_80px_rgba(0,0,0,0.98),0_0_40px_rgba(0,245,212,0.12)] bg-[rgba(5,13,9,0.99)] backdrop-blur-2xl"
+        className="relative w-[96%] max-w-[960px] rounded-2xl border border-[rgba(0,245,212,0.3)] shadow-[0_0_80px_rgba(0,0,0,0.98),0_0_40px_rgba(0,245,212,0.12)] bg-[rgba(5,13,9,0.99)] backdrop-blur-2xl"
         style={{
           animation: 'modal-in 0.3s cubic-bezier(0.16,1,0.3,1)',
         }}
@@ -513,7 +514,8 @@ function StoryModal({ legend, onClose, isDiscovered }) {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 

@@ -167,6 +167,30 @@
         "comments": 28,
         "legendsVisited": 4
       }
+    },
+    {
+      "id": "u-855f6667-66c4-4280-8fc3-e6d77335f99a",
+      "username": "hanxelito",
+      "email": "bhanxel600@gmail.com",
+      "passwordHash": "scrypt:69edc37c57931e9318744cef1bcbb546:dd2905df09a5ea6221a63b4e554ff19a803f060ab1c80d52d0115b33d00aa9ce79e3c30a828a39487a777c8d0319889601fd9609f34e55184615b3c1c8092432",
+      "displayName": "hanxel badilla",
+      "role": "usuario",
+      "avatar": "/images/la-segua.jpg",
+      "bio": "Nuevo miembro de la comunidad de LEYENDAS CR.",
+      "province": "Puntarenas",
+      "joinedAt": "2026-10-01",
+      "reputation": 0,
+      "badges": [
+        "Nuevo miembro"
+      ],
+      "stats": {
+        "posts": 0,
+        "comments": 0,
+        "legendsVisited": 0
+      },
+      "age": 122,
+      "isAdult": true,
+      "birthDate": "1904-01-01"
     }
   ],
   "legends": [

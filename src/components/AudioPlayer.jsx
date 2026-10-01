@@ -21,12 +21,19 @@ function AudioPlayer({ src, ambientSrc, title, isAmbient = false }) {
         setBuffered(audio.buffered.end(audio.buffered.length - 1))
       }
     }
+    const handlePlay = () => setIsPlaying(true)
+    const handlePause = () => setIsPlaying(false)
     const handleEnded = () => setIsPlaying(false)
-    const handleError = () => console.error('Error loading audio:', src)
+    const handleError = () => {
+      setIsPlaying(false)
+      console.error('Error loading audio:', src)
+    }
 
     audio.addEventListener('timeupdate', handleTimeUpdate)
     audio.addEventListener('durationchange', handleDurationChange)
     audio.addEventListener('progress', handleProgress)
+    audio.addEventListener('play', handlePlay)
+    audio.addEventListener('pause', handlePause)
     audio.addEventListener('ended', handleEnded)
     audio.addEventListener('error', handleError)
     audio.volume = isMuted ? 0 : volume
@@ -35,6 +42,8 @@ function AudioPlayer({ src, ambientSrc, title, isAmbient = false }) {
       audio.removeEventListener('timeupdate', handleTimeUpdate)
       audio.removeEventListener('durationchange', handleDurationChange)
       audio.removeEventListener('progress', handleProgress)
+      audio.removeEventListener('play', handlePlay)
+      audio.removeEventListener('pause', handlePause)
       audio.removeEventListener('ended', handleEnded)
       audio.removeEventListener('error', handleError)
     }
@@ -46,9 +55,11 @@ function AudioPlayer({ src, ambientSrc, title, isAmbient = false }) {
     if (isPlaying) {
       audio.pause()
     } else {
-      audio.play().catch(() => {})
+      audio.play().catch((error) => {
+        setIsPlaying(false)
+        console.error('Error playing audio:', error)
+      })
     }
-    setIsPlaying(!isPlaying)
   }
 
   const handleSeek = (e) => {

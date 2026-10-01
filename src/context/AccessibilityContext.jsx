@@ -56,6 +56,7 @@ const DEFAULTS = {
   fontScale: 1,
   colorMode: 'normal',
   highContrast: false,
+  voiceNarration: false,
 }
 
 const AccessibilityContext = createContext(null)
@@ -77,7 +78,16 @@ export function AccessibilityProvider({ children }) {
     root.dataset.theme = preferences.theme
     root.dataset.colorMode = preferences.colorMode
     root.dataset.contrast = preferences.highContrast ? 'high' : 'normal'
-    root.style.fontSize = `${16 * preferences.fontScale}px`
+    root.dataset.fontScale = String(Math.round(preferences.fontScale * 100))
+    const applyResponsiveFontScale = () => {
+      const preferredSize = 16 * preferences.fontScale
+      const screenLimit = Math.max(16, Math.min(24, window.innerWidth / 18))
+      root.style.fontSize = `${Math.min(preferredSize, screenLimit)}px`
+    }
+
+    applyResponsiveFontScale()
+    window.addEventListener('resize', applyResponsiveFontScale)
+    return () => window.removeEventListener('resize', applyResponsiveFontScale)
   }, [preferences])
 
   const setTheme = useCallback((theme) => {
@@ -109,6 +119,10 @@ export function AccessibilityProvider({ children }) {
     setPreferences((prev) => ({ ...prev, highContrast: !prev.highContrast }))
   }, [])
 
+  const toggleVoiceNarration = useCallback(() => {
+    setPreferences((prev) => ({ ...prev, voiceNarration: !prev.voiceNarration }))
+  }, [])
+
   const resetPreferences = useCallback(() => {
     setPreferences(DEFAULTS)
   }, [])
@@ -124,6 +138,7 @@ export function AccessibilityProvider({ children }) {
       stepFontScale,
       setColorMode,
       toggleHighContrast,
+      toggleVoiceNarration,
       resetPreferences,
     }),
     [
@@ -134,6 +149,7 @@ export function AccessibilityProvider({ children }) {
       stepFontScale,
       setColorMode,
       toggleHighContrast,
+      toggleVoiceNarration,
       resetPreferences,
     ]
   )
