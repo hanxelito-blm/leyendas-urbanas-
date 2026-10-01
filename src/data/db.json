@@ -1,0 +1,1338 @@
+{
+  "meta": {
+    "name": "LEYENDAS CR",
+    "description": "Portal interactivo de leyendas e historias urbanas de Costa Rica.",
+    "version": "2.0.0",
+    "country": "Costa Rica",
+    "center": {
+      "lat": 9.9333,
+      "lng": -84.0833
+    },
+    "tileLayer": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "attribution": "Tiles de Esri",
+    "lastUpdated": "2025-09-22"
+  },
+  "roles": [
+    {
+      "id": "usuario",
+      "label": "Usuario",
+      "description": "Acceso de lectura al mapa, al archivo personal y al foro de la comunidad.",
+      "permissions": [
+        "read:legends",
+        "use:map",
+        "forum:read",
+        "forum:write",
+        "profile:read"
+      ],
+      "color": "#00F5D4"
+    },
+    {
+      "id": "moderador",
+      "label": "Moderador",
+      "description": "Puede revisar, ocultar y responder publicaciones y comentarios del foro.",
+      "permissions": [
+        "read:legends",
+        "use:map",
+        "forum:read",
+        "forum:write",
+        "profile:read",
+        "forum:moderate"
+      ],
+      "color": "#E0A93B"
+    },
+    {
+      "id": "admin",
+      "label": "Administrador",
+      "description": "Acceso total: panel administrativo, metricas, proyecciones IA y moderacion.",
+      "permissions": [
+        "read:legends",
+        "use:map",
+        "forum:read",
+        "forum:write",
+        "profile:read",
+        "forum:moderate",
+        "admin:panel",
+        "admin:ai",
+        "admin:users"
+      ],
+      "color": "#D02B3C"
+    }
+  ],
+  "users": [
+    {
+      "id": "u-001",
+      "username": "admin",
+      "email": "admin@leyendascr.cr",
+      "password": "leyendas123",
+      "displayName": "Guardian del Archivo",
+      "role": "admin",
+      "avatar": "/images/la-segua.jpg",
+      "bio": "Administrador del portal LEYENDAS CR y custodio de los archivos.",
+      "province": "San José",
+      "joinedAt": "2023-02-14",
+      "reputation": 4820,
+      "badges": [
+        "Fundador",
+        "Archivista",
+        "Inspector"
+      ],
+      "stats": {
+        "posts": 34,
+        "comments": 211,
+        "legendsVisited": 15
+      }
+    },
+    {
+      "id": "u-002",
+      "username": "mod_isabel",
+      "email": "isabel@leyendascr.cr",
+      "password": "leyendas123",
+      "displayName": "Isabel Mora",
+      "role": "moderador",
+      "avatar": "/images/sanatorio-duran.jpg",
+      "bio": "Moderadora del foro. Investigadora de folklore sanatorio.",
+      "province": "Cartago",
+      "joinedAt": "2023-08-03",
+      "reputation": 2310,
+      "badges": [
+        "Moderadora",
+        "Vigilante"
+      ],
+      "stats": {
+        "posts": 28,
+        "comments": 640,
+        "legendsVisited": 12
+      }
+    },
+    {
+      "id": "u-003",
+      "username": "explorador",
+      "email": "explorador@leyendascr.cr",
+      "password": "leyendas123",
+      "displayName": "Carlos Urena",
+      "role": "usuario",
+      "avatar": "/images/ciudad-condor.jpg",
+      "bio": "Salgo los fines de semana a documentar avistamientos.",
+      "province": "Heredia",
+      "joinedAt": "2024-01-20",
+      "reputation": 860,
+      "badges": [
+        "Explorador",
+        "Fotografo"
+      ],
+      "stats": {
+        "posts": 12,
+        "comments": 97,
+        "legendsVisited": 9
+      }
+    },
+    {
+      "id": "u-004",
+      "username": "maria_cr",
+      "email": "maria@leyendascr.cr",
+      "password": "leyendas123",
+      "displayName": "Maria Jimenez",
+      "role": "usuario",
+      "avatar": "/images/monasterio-nostra.jpg",
+      "bio": "Coleccionista de relatos de Guanacaste.",
+      "province": "Guanacaste",
+      "joinedAt": "2024-05-09",
+      "reputation": 540,
+      "badges": [
+        "Cronista"
+      ],
+      "stats": {
+        "posts": 7,
+        "comments": 61,
+        "legendsVisited": 6
+      }
+    },
+    {
+      "id": "u-005",
+      "username": "tomas_p",
+      "email": "tomas@leyendascr.cr",
+      "password": "leyendas123",
+      "displayName": "Tomas Portugues",
+      "role": "usuario",
+      "avatar": "/images/rio-paquira.jpg",
+      "bio": "Buzo amateur y testigo del Golfo Dulce.",
+      "province": "Puntarenas",
+      "joinedAt": "2025-03-17",
+      "reputation": 320,
+      "badges": [
+        "Buzo"
+      ],
+      "stats": {
+        "posts": 3,
+        "comments": 28,
+        "legendsVisited": 4
+      }
+    }
+  ],
+  "legends": [
+    {
+      "id": "leyenda-01",
+      "title": "La Carreta sin Bueyes",
+      "category": "Mito Tradicional",
+      "province": "San José",
+      "locationName": "San José Centro",
+      "coordinates": [
+        9.9333,
+        -84.0833
+      ],
+      "yearOrEra": "Siglo XIX",
+      "shortDescription": "El misterioso crujido de madera resonando en la medianoche...",
+      "summary": "Una carreta sin animales cruza el centro de San José en plena madrugada.",
+      "fullStory": "Cuentan que en las noches silenciosas se escucha el retumbar de una carreta de madera desvencijada recorriendo las calles empedradas sin animales que la arrastren, presagio de desgracia para quien la vea. Los más ancianos del barrio aseguran que el conductor es un alma en pena que busca redención, y su aparición anuncia desgracias inevitables.",
+      "imageUrl": "/images/carreta-sin-bueyes.jpg",
+      "creatureImageUrl": "/images/carreta-sin-bueyes.jpg",
+      "audioUrl": "/audio/leyenda-01.mp3",
+      "danger": {
+        "level": 2,
+        "label": "Inquietante",
+        "color": "#E0A93B",
+        "description": "Su aparición presagia desgracias. No es agresiva, pero verla trae mala suerte.",
+        "advice": "Lleva linterna, evita reflejos y no te quedes a solas."
+      },
+      "tags": [
+        "carreta",
+        "San José",
+        "mala suerte",
+        "ruido nocturno"
+      ],
+      "stats": {
+        "views": 1678,
+        "sightings": 34,
+        "comments": 3,
+        "favorites": 88
+      },
+      "meta": {
+        "verified": true,
+        "featured": false,
+        "source": "Testimonio de barrio",
+        "reportedAt": "2018-01-10"
+      }
+    },
+    {
+      "id": "leyenda-02",
+      "title": "El Ente del Faro Abandonado",
+      "category": "Historia Urbana",
+      "province": "Puntarenas",
+      "locationName": "Puntarenas",
+      "coordinates": [
+        9.9763,
+        -84.8384
+      ],
+      "yearOrEra": "Años 70",
+      "shortDescription": "Luces extrañas que parpadean en la vieja estructura frente al mar.",
+      "summary": "La linterna del faro destruido se enciende sola y atrae barcos.",
+      "fullStory": "Los pescadores locales juran que cuando la marea sube a medianoche, la linterna del faro destruido se enciende sola guiando a barcos fantasmales hacia la costa. Dicen que el último farero, don Ramón, se negó a abandonar su puesto durante una tormenta mortal y su espíritu permanece encendiendo la luz.",
+      "imageUrl": "/images/faro-abandonado.jpg",
+      "creatureImageUrl": "/images/faro-abandonado.jpg",
+      "audioUrl": "/audio/leyenda-02.mp3",
+      "danger": {
+        "level": 3,
+        "label": "Peligroso",
+        "color": "#E0632B",
+        "description": "El ente atrae a los incautos hacia el mar en noches de tormenta. No te acerques al agua.",
+        "advice": "No ingreses en horario nocturno y registra tu hora de entrada y salida."
+      },
+      "tags": [
+        "faro",
+        "Puntarenas",
+        "mar",
+        "farero"
+      ],
+      "stats": {
+        "views": 1197,
+        "sightings": 21,
+        "comments": 7,
+        "favorites": 62
+      },
+      "meta": {
+        "verified": false,
+        "featured": false,
+        "source": "Archivo maritime",
+        "reportedAt": "2019-02-11"
+      }
+    },
+    {
+      "id": "leyenda-03",
+      "title": "El Sanatorio Durán",
+      "category": "Historia Urbana",
+      "province": "Cartago",
+      "locationName": "Tierra Blanca, Cartago",
+      "coordinates": [
+        9.8942,
+        -83.8583
+      ],
+      "yearOrEra": "Siglo XX",
+      "shortDescription": "Lamentos y figuras fantasmales en los pasillos del viejo hospital.",
+      "summary": "El antiguo sanatorio guarda pasillos, puertas y voces de quienes no se fueron.",
+      "fullStory": "Antiguo sanatorio para enfermos de tuberculosis. Hoy en día, visitantes y cuidadores aseguran ver la silueta de una monja y niños corriendo por los pasillos oscuros. El olor a éter y hierbas medicinales nunca se fue del todo.",
+      "imageUrl": "/images/sanatorio-duran.jpg",
+      "creatureImageUrl": "/images/sanatorio-duran.jpg",
+      "audioUrl": "/audio/leyenda-03.mp3",
+      "danger": {
+        "level": 4,
+        "label": "Extremo",
+        "color": "#D02B3C",
+        "description": "Visitantes han salido aterrorizados. Fenómenos físicos reportados: puertas que se cierran solas, sombras que tocan.",
+        "advice": "Zona de riesgo alto. Recomendamos no visitar sin guia autorizado."
+      },
+      "tags": [
+        "sanatorio",
+        "Cartago",
+        "salud",
+        "monjas"
+      ],
+      "stats": {
+        "views": 2529,
+        "sightings": 57,
+        "comments": 9,
+        "favorites": 134
+      },
+      "meta": {
+        "verified": false,
+        "featured": true,
+        "source": "Expedicion oficial",
+        "reportedAt": "2020-03-12"
+      }
+    },
+    {
+      "id": "leyenda-04",
+      "title": "El Cadejos",
+      "category": "Mito Tradicional",
+      "province": "Guanacaste",
+      "locationName": "Liberia, Guanacaste",
+      "coordinates": [
+        10.6267,
+        -85.4433
+      ],
+      "yearOrEra": "Era Colonial",
+      "shortDescription": "Un perro espectral de ojos brasas que acecha en los caminos solitarios.",
+      "summary": "En la vieja mina aparecen las luces de los mineros desaparecidos.",
+      "fullStory": "En los caminos de tierra de Guanacaste, cuando el sol se pone y la neblina cubre los potreros, aparece el Cadejos: un perro negro inmenso con ojos como brasas ardientes. Hay dos: el blanco, que protege a los viajeros de buen corazón, y el negro, que persigue a los pecadores y borrachos hasta enloquecerlos.",
+      "imageUrl": "/images/el-cadejos.jpg",
+      "creatureImageUrl": "/images/el-cadejos.jpg",
+      "audioUrl": "/audio/leyenda-04.mp3",
+      "danger": {
+        "level": 3,
+        "label": "Peligroso",
+        "color": "#E0632B",
+        "description": "El Cadejos negro puede seguirte hasta tu hogar. Si caminas solo de noche, reza.",
+        "advice": "No ingreses en horario nocturno y registra tu hora de entrada y salida."
+      },
+      "tags": [
+        "mina",
+        "Guanacaste",
+        "auri",
+        "duendes"
+      ],
+      "stats": {
+        "views": 864,
+        "sightings": 12,
+        "comments": 15,
+        "favorites": 44
+      },
+      "meta": {
+        "verified": true,
+        "featured": false,
+        "source": "Archivo departamental",
+        "reportedAt": "2021-04-13"
+      }
+    },
+    {
+      "id": "leyenda-05",
+      "title": "La Llorona del Río Virilla",
+      "category": "Mito Tradicional",
+      "province": "Heredia",
+      "locationName": "Río Virilla, Heredia",
+      "coordinates": [
+        9.9981,
+        -84.1167
+      ],
+      "yearOrEra": "Siglo XX",
+      "shortDescription": "El lamento de una madre que ahogó a sus hijos y ahora los busca eternamente.",
+      "summary": "Una tropa fantasma desciende el cafetal en ruta por el sector del Cut.",
+      "fullStory": "Cuenta la leyenda que una mujer despechada ahogó a sus dos hijos en el Río Virilla y, arrepentida, se lanzó tras ellos. Su espíritu no encuentra paz y deambula por las orillas del río en las noches de luna llena, llorando y llamando a sus pequeños.",
+      "imageUrl": "/images/llorona-virilla.jpg",
+      "creatureImageUrl": "/images/llorona-virilla.jpg",
+      "audioUrl": "/audio/leyenda-05.mp3",
+      "danger": {
+        "level": 4,
+        "label": "Extremo",
+        "color": "#D02B3C",
+        "description": "Atrae a niños y adultos hacia el río. Nunca te acerques al agua si escuchas su llanto.",
+        "advice": "Zona de riesgo alto. Recomendamos no visitar sin guia autorizado."
+      },
+      "tags": [
+        "Cut",
+        "Guanacaste",
+        "ejercito",
+        "cafe"
+      ],
+      "stats": {
+        "views": 753,
+        "sightings": 9,
+        "comments": 12,
+        "favorites": 38
+      },
+      "meta": {
+        "verified": false,
+        "featured": false,
+        "source": "Testimonio de productor",
+        "reportedAt": "2022-05-14"
+      }
+    },
+    {
+      "id": "leyenda-06",
+      "title": "La Bruja de Escazú",
+      "category": "Mito Tradicional",
+      "province": "San José",
+      "locationName": "Cerro San Miguel, Escazú",
+      "coordinates": [
+        9.9167,
+        -84.1667
+      ],
+      "yearOrEra": "Siglo XIX",
+      "shortDescription": "Vuelos nocturnos y pactos oscuros en las montañas del oeste.",
+      "summary": "Danza de los cadaveres en el centro de Limon.",
+      "fullStory": "Escazú, conocida como 'La Ciudad de las Brujas', esconde secretos ancestrales en sus cerros. Cuentan que doña Francisca, una curandera del siglo XIX, hizo un pacto con fuerzas oscuras para obtener poderes de sanación. En las noches de San Juan, las brujas se reúnen en la cueva del Cerro San Miguel.",
+      "imageUrl": "/images/bruja-escazu.jpg",
+      "creatureImageUrl": "/images/bruja-escazu.jpg",
+      "audioUrl": "/audio/leyenda-06.mp3",
+      "danger": {
+        "level": 3,
+        "label": "Peligroso",
+        "color": "#E0632B",
+        "description": "Las brujas pueden lanzar maleficios a quien las interrumpa en sus rituales nocturnos.",
+        "advice": "No ingreses en horario nocturno y registra tu hora de entrada y salida."
+      },
+      "tags": [
+        "Limón",
+        "cadaveres",
+        "baile",
+        "noche"
+      ],
+      "stats": {
+        "views": 1900,
+        "sightings": 40,
+        "comments": 9,
+        "favorites": 100
+      },
+      "meta": {
+        "verified": false,
+        "featured": false,
+        "source": "Archivo de tradicion",
+        "reportedAt": "2023-06-15"
+      }
+    },
+    {
+      "id": "leyenda-07",
+      "title": "El Monstruo del Lago de Arenal",
+      "category": "Mito Tradicional",
+      "province": "Alajuela",
+      "locationName": "Lago Arenal, Alajuela",
+      "coordinates": [
+        10.4667,
+        -84.9333
+      ],
+      "yearOrEra": "1968",
+      "shortDescription": "Una criatura ancestral que duerme en el fondo del volcán dormido.",
+      "summary": "El faro de la Cruz alumbra a los naufragos de la ensenada.",
+      "fullStory": "Antes de que el lago fuera artificial, los indígenas huetares adoraban a una serpiente emplumada que dormía en el cráter del volcán Arenal. Cuando la erupción de 1968 sepultó los pueblos, la criatura despertó. Pescadores reportan ver una sombra inmensa moviéndose bajo la superficie.",
+      "imageUrl": "/images/monstruo-arenal.jpg",
+      "creatureImageUrl": "/images/monstruo-arenal.jpg",
+      "audioUrl": "/audio/leyenda-07.mp3",
+      "danger": {
+        "level": 4,
+        "label": "Extremo",
+        "color": "#D02B3C",
+        "description": "La criatura puede volcar embarcaciones pequeñas. Varios pescadores han desaparecido sin rastro.",
+        "advice": "Zona de riesgo alto. Recomendamos no visitar sin guia autorizado."
+      },
+      "tags": [
+        "monasterio",
+        "Guanacaste",
+        "reliquia",
+        "balneario"
+      ],
+      "stats": {
+        "views": 1086,
+        "sightings": 18,
+        "comments": 4,
+        "favorites": 56
+      },
+      "meta": {
+        "verified": true,
+        "featured": false,
+        "source": "Archivo colonial",
+        "reportedAt": "2018-07-16"
+      }
+    },
+    {
+      "id": "leyenda-08",
+      "title": "El Tesoro de los Piratas en Isla del Coco",
+      "category": "Historia Urbana",
+      "province": "Puntarenas",
+      "locationName": "Isla del Coco",
+      "coordinates": [
+        5.5333,
+        -87.0667
+      ],
+      "yearOrEra": "1820",
+      "shortDescription": "Oro maldito enterrado por corsarios que nadie ha podido recuperar.",
+      "summary": "Una caceria de perros negros ronda los potreros de Alajuela.",
+      "fullStory": "La Isla del Coco, a 500 km de la costa, guarda uno de los tesoros más codiciados del Pacífico. Cuentan que el pirata Benito Bonito enterró allí toneladas de oro robado en 1820. Quienes han intentado encontrarlo han muerto en extrañas circunstancias.",
+      "imageUrl": "/images/tesoro-piratas.jpg",
+      "creatureImageUrl": "/images/tesoro-piratas.jpg",
+      "audioUrl": "/audio/leyenda-08.mp3",
+      "danger": {
+        "level": 2,
+        "label": "Inquietante",
+        "color": "#E0A93B",
+        "description": "La maldición del oro pirata. Quienes buscan el tesoro sufren accidentes inexplicables.",
+        "advice": "Lleva linterna, evita reflejos y no te quedes a solas."
+      },
+      "tags": [
+        "Alajuela",
+        "perros",
+        "caballo",
+        "noche"
+      ],
+      "stats": {
+        "views": 2751,
+        "sightings": 63,
+        "comments": 15,
+        "favorites": 146
+      },
+      "meta": {
+        "verified": false,
+        "featured": false,
+        "source": "Testimonio de campo",
+        "reportedAt": "2019-08-17"
+      }
+    },
+    {
+      "id": "leyenda-09",
+      "title": "El Padre sin Cabeza de Orosi",
+      "category": "Historia Urbana",
+      "province": "Cartago",
+      "locationName": "Valle de Orosi",
+      "coordinates": [
+        9.8167,
+        -83.85
+      ],
+      "yearOrEra": "1666",
+      "shortDescription": "Un sacerdote decapitado que busca su cabeza por los cafetales eternamente.",
+      "summary": "Lluvia de peces sobre la ensenada de Puntarenas.",
+      "fullStory": "En el valle de Orosi, entre cafetales y ruinas coloniales, deambula el espíritu de fray Antonio, un sacerdote decapitado por piratas en 1666. Su cabeza rodó por la colina hasta el río Reventazón, y su cuerpo sin cabeza sigue buscándola cada noche.",
+      "imageUrl": "/images/padre-sin-cabeza.jpg",
+      "creatureImageUrl": "/images/padre-sin-cabeza.jpg",
+      "audioUrl": "/audio/leyenda-09.mp3",
+      "danger": {
+        "level": 3,
+        "label": "Peligroso",
+        "color": "#E0632B",
+        "description": "El espíritu confunde a los viajeros y los extravía entre los cafetales en noches sin luna.",
+        "advice": "No ingreses en horario nocturno y registra tu hora de entrada y salida."
+      },
+      "tags": [
+        "Puntarenas",
+        "lluvia",
+        "peces",
+        "mar"
+      ],
+      "stats": {
+        "views": 1419,
+        "sightings": 27,
+        "comments": 13,
+        "favorites": 74
+      },
+      "meta": {
+        "verified": false,
+        "featured": false,
+        "source": "Evidencia audiovisual",
+        "reportedAt": "2020-01-18"
+      }
+    },
+    {
+      "id": "leyenda-10",
+      "title": "La Segua",
+      "category": "Colonial",
+      "province": "Cartago",
+      "locationName": "Nicoya, Guanacaste",
+      "coordinates": [
+        10.3,
+        -85.25
+      ],
+      "yearOrEra": "Era Colonial",
+      "shortDescription": "Mujer hermosa que se transforma en caballo esquelético para castigar infieles.",
+      "summary": "La sirena del Golfo Dulce llama a los pescadores hacia las rocas.",
+      "fullStory": "Cuentan los abuelos que en las noches oscuras, por los caminos solitarios de Cartago, se aparece una mujer de figura esbelta y hermosa. Seduce a los hombres infieles y vanidosos, y cuando están solos en el camino, su rostro se vuelve una calavera de caballo con ojos de fuego. Muchos han enloquecido tras verla.",
+      "imageUrl": "/images/la-segua.jpg",
+      "creatureImageUrl": "/images/la-segua.jpg",
+      "audioUrl": "/audio/leyenda-10.mp3",
+      "danger": {
+        "level": 4,
+        "label": "Extremo",
+        "color": "#D02B3C",
+        "description": "Conduce a la locura permanente. Decenas de hombres han perdido la razón tras encontrarla. EVITA los caminos solitarios de noche.",
+        "advice": "Zona de riesgo alto. Recomendamos no visitar sin guia autorizado."
+      },
+      "tags": [
+        "Golfo Dulce",
+        "sirena",
+        "mar",
+        "Osa"
+      ],
+      "stats": {
+        "views": 975,
+        "sightings": 15,
+        "comments": 18,
+        "favorites": 50
+      },
+      "meta": {
+        "verified": true,
+        "featured": false,
+        "source": "Bitacora de buceo",
+        "reportedAt": "2021-02-10"
+      }
+    },
+    {
+      "id": "leyenda-11",
+      "title": "El Barco Fantasma de Bahía Ballena",
+      "category": "Historia Urbana",
+      "province": "Puntarenas",
+      "locationName": "Bahía Ballena, Uvita",
+      "coordinates": [
+        9.1167,
+        -83.7333
+      ],
+      "yearOrEra": "1587",
+      "shortDescription": "Un galeón español que navega en noches de tormenta sin tripulación visible.",
+      "summary": "Un bus nocturno recorre la ciudad vacia a las 11:11 de la noche.",
+      "fullStory": "En la cola de la ballena que forma la bahía, cuando las tormentas azotan el Pacífico, surge de la niebla un galeón español del siglo XVI con velas rotas. No hay tripulación, solo el crujido de la madera y el canto de sirenas que atrae a los pescadores imprudentes.",
+      "imageUrl": "/images/barco-fantasma.jpg",
+      "creatureImageUrl": "/images/barco-fantasma.jpg",
+      "audioUrl": "/audio/leyenda-11.mp3",
+      "danger": {
+        "level": 4,
+        "label": "Extremo",
+        "color": "#D02B3C",
+        "description": "El canto de las sirenas puede atraerte al agua. Varios pescadores desaparecieron en tormentas donde se reportó el barco.",
+        "advice": "Zona de riesgo alto. Recomendamos no visitar sin guia autorizado."
+      },
+      "tags": [
+        "San José",
+        "bus",
+        "conductora",
+        "urbano"
+      ],
+      "stats": {
+        "views": 3084,
+        "sightings": 72,
+        "comments": 7,
+        "favorites": 164
+      },
+      "meta": {
+        "verified": false,
+        "featured": false,
+        "source": "Testimonio multiple",
+        "reportedAt": "2022-03-11"
+      }
+    },
+    {
+      "id": "leyenda-12",
+      "title": "La Mona de Limón",
+      "category": "Mito Tradicional",
+      "province": "Limón",
+      "locationName": "Puerto Limón",
+      "coordinates": [
+        9.9933,
+        -83.0333
+      ],
+      "yearOrEra": "Tradición Afrocaribeña",
+      "shortDescription": "Espíritu travieso que protege la selva y castiga a quien la daña.",
+      "summary": "Los pasillos del hospital de Heredia repiten pasos que nadie recorre.",
+      "fullStory": "En los manglares y selvas de Limón, la Mona es un espíritu guardián que toma la forma de una mujer mono de pelaje negro y ojos dorados. Protege los árboles sagrados y castiga a los taladores: les confunde los caminos, les rompe las herramientas y les susurra en sueños hasta enloquecerlos.",
+      "imageUrl": "/images/la-mona.jpg",
+      "creatureImageUrl": "/images/la-mona.jpg",
+      "audioUrl": "/audio/leyenda-12.mp3",
+      "danger": {
+        "level": 2,
+        "label": "Inquietante",
+        "color": "#E0A93B",
+        "description": "Solo actúa contra quienes dañan la selva. Si respetas el bosque, ella te respetará.",
+        "advice": "Lleva linterna, evita reflejos y no te quedes a solas."
+      },
+      "tags": [
+        "Heredia",
+        "hospital",
+        "monjas",
+        "urbano"
+      ],
+      "stats": {
+        "views": 2085,
+        "sightings": 45,
+        "comments": 14,
+        "favorites": 110
+      },
+      "meta": {
+        "verified": false,
+        "featured": false,
+        "source": "Archivo clinico",
+        "reportedAt": "2023-04-12"
+      }
+    },
+    {
+      "id": "leyenda-13",
+      "title": "El Diablo de la Catedral de Cartago",
+      "category": "Historia Urbana",
+      "province": "Cartago",
+      "locationName": "Ruinas de Santiago Apóstol",
+      "coordinates": [
+        9.8667,
+        -83.9167
+      ],
+      "yearOrEra": "Siglo XVI-XIX",
+      "shortDescription": "El pacto que maldijo la construcción eterna de la catedral inacabada.",
+      "summary": "El nino fantasma de una escuela que nunca cierra sus puertas.",
+      "fullStory": "Las ruinas de la Catedral de Santiago Apóstol en Cartago llevan siglos sin terminarse. Cuentan que el arquitecto, desesperado por los terremotos que derribaban su obra, hizo un pacto con el diablo: le daría su alma a cambio de una iglesia que nunca cayera.",
+      "imageUrl": "/images/diablo-cartago.jpg",
+      "creatureImageUrl": "/images/diablo-cartago.jpg",
+      "audioUrl": "/audio/leyenda-13.mp3",
+      "danger": {
+        "level": 3,
+        "label": "Peligroso",
+        "color": "#E0632B",
+        "description": "Se reportan apariciones del diablo en las ruinas a medianoche. La maldición del pacto aún persiste.",
+        "advice": "No ingreses en horario nocturno y registra tu hora de entrada y salida."
+      },
+      "tags": [
+        "escuela",
+        "Limón",
+        "nino",
+        "urbano"
+      ],
+      "stats": {
+        "views": 716,
+        "sightings": 8,
+        "comments": 11,
+        "favorites": 36
+      },
+      "meta": {
+        "verified": true,
+        "featured": false,
+        "source": "Testimonio escolar",
+        "reportedAt": "2018-05-13"
+      }
+    },
+    {
+      "id": "leyenda-14",
+      "title": "La Llorona de los Cañales de Tortuguero",
+      "category": "Mito Tradicional",
+      "province": "Limón",
+      "locationName": "Parque Nacional Tortuguero",
+      "coordinates": [
+        10.5333,
+        -83.5
+      ],
+      "yearOrEra": "Años 50",
+      "shortDescription": "Lamento de una madre que perdió a su hija en los canales, busca entre la vegetación.",
+      "summary": "La Llorona de la peninsula llora cuando el sol se pone.",
+      "fullStory": "En el laberinto de canales de Tortuguero, donde el agua es espejo y la selva toca el cielo, deambula una Llorona distinta: no ahogó a sus hijos, los perdió. Doña Carmen buscaba a su hija pequeña, arrancada por una corriente traicionera mientras lavaba ropa.",
+      "imageUrl": "/images/llorona-tortuguero.jpg",
+      "creatureImageUrl": "/images/llorona-tortuguero.jpg",
+      "audioUrl": "/audio/leyenda-14.mp3",
+      "danger": {
+        "level": 3,
+        "label": "Peligroso",
+        "color": "#E0632B",
+        "description": "Su llanto confunde a los balseros. Han habido accidentes en los canales la misma noche que se escuchó su lamento.",
+        "advice": "No ingreses en horario nocturno y registra tu hora de entrada y salida."
+      },
+      "tags": [
+        "Guanacaste",
+        "Chiquito",
+        "llorona",
+        "noche"
+      ],
+      "stats": {
+        "views": 1567,
+        "sightings": 31,
+        "comments": 17,
+        "favorites": 82
+      },
+      "meta": {
+        "verified": false,
+        "featured": false,
+        "source": "Archivo de tradicion",
+        "reportedAt": "2019-06-14"
+      }
+    },
+    {
+      "id": "leyenda-15",
+      "title": "El Niño del Cerro de la Muerte",
+      "category": "Historia Urbana",
+      "province": "San José",
+      "locationName": "Cerro de la Muerte, km 84",
+      "coordinates": [
+        9.55,
+        -83.75
+      ],
+      "yearOrEra": "1970-presente",
+      "shortDescription": "Un niño que aparece en la carretera pidiendo aventón y desaparece al subir.",
+      "summary": "La Segua acecha en los caminos solitarios de Cartago.",
+      "fullStory": "En el tramo más alto de la Interamericana, donde la niebla lo cubre todo y el frío cala los huesos, aparece un niño de unos 7 años, vestido con ropa antigua y mojada. Pide aventón a los conductores solitarios, y si lo suben, se sienta en silencio. Al pasar el kilómetro 84, el conductor mira al retrovisor: el asiento está vacío.",
+      "imageUrl": "/images/nino-cerro-muerte.jpg",
+      "creatureImageUrl": "/images/nino-cerro-muerte.jpg",
+      "audioUrl": "/audio/leyenda-15.mp3",
+      "danger": {
+        "level": 4,
+        "label": "Extremo",
+        "color": "#D02B3C",
+        "description": "Varios conductores han sufrido accidentes graves minutos después de recogerlo. Causa pánico y pérdida de control del vehículo.",
+        "advice": "Zona de riesgo alto. Recomendamos no visitar sin guia autorizado."
+      },
+      "tags": [
+        "Segua",
+        "Cartago",
+        "criatura",
+        "camino"
+      ],
+      "stats": {
+        "views": 3676,
+        "sightings": 88,
+        "comments": 6,
+        "favorites": 196
+      },
+      "meta": {
+        "verified": false,
+        "featured": true,
+        "source": "Expedicion oficial",
+        "reportedAt": "2020-07-15"
+      }
+    }
+  ],
+  "forum": {
+    "categories": [
+      {
+        "id": "c-1",
+        "slug": "testimonios",
+        "name": "Testimonios",
+        "description": "Relatos y avistamientos de la comunidad.",
+        "icon": "eye",
+        "color": "#00F5D4",
+        "order": 1
+      },
+      {
+        "id": "c-2",
+        "slug": "debates",
+        "name": "Debates",
+        "description": "Conversaciones sobre veracidad, historia y folklore.",
+        "icon": "message",
+        "color": "#E0A93B",
+        "order": 2
+      },
+      {
+        "id": "c-3",
+        "slug": "investigacion",
+        "name": "Investigacion",
+        "description": "Documentos, bitacoras y archivos del mito.",
+        "icon": "book",
+        "color": "#7C5CFF",
+        "order": 3
+      },
+      {
+        "id": "c-4",
+        "slug": "seguridad",
+        "name": "Seguridad y riesgo",
+        "description": "Protocolos de visita y advertencias de peligro.",
+        "icon": "shield",
+        "color": "#D02B3C",
+        "order": 4
+      }
+    ],
+    "posts": [
+      {
+        "id": "p-1",
+        "categoryId": "c-1",
+        "title": "Avistamiento en el corredor del Rio Torres: el bus de las 11:11 PM",
+        "excerpt": "El colectivo fantasma sigue pasando exactamente a las 11:11 de la noche por la ruta 27. Adjunto la evidencia de tres lectores esta semana.",
+        "body": "Desde que era nino vi ese bus: rutas 27 y 34, siempre a las 11:11 PM, sin luces traseras. Los choferes dicen que se cruza con la niebla. Este fin de semana tres lectores distintos me escribieron confirmando el mismo avistamiento, por lo que subo el reporte con consenso del fenomeno.",
+        "authorId": "u-003",
+        "createdAt": "2025-09-12T20:15:00Z",
+        "updatedAt": "2025-09-12T20:15:00Z",
+        "tags": [
+          "autobus",
+          "Río Torres",
+          "San José"
+        ],
+        "status": "publicado",
+        "pinned": true,
+        "likes": 128,
+        "views": 1540,
+        "relatedLegendId": "leyenda-11"
+      },
+      {
+        "id": "p-2",
+        "categoryId": "c-2",
+        "title": "La Segua es una advertencia social o un cuento de excusas",
+        "excerpt": "La Segua aparece en caminos solitarios frente a mujeres que caminan solas de noche. Es una moraleja sobre el riesgo o un avatar del folklore?",
+        "body": "La Segua es, para mi, la version tica de una advertencia universal: la historia que advierte sobre el camino. Discuto tres hipotesis y por que ninguna explica los avistamientos modernos del sector Quepos.",
+        "authorId": "u-004",
+        "createdAt": "2025-09-08T14:00:00Z",
+        "updatedAt": "2025-09-10T09:30:00Z",
+        "tags": [
+          "La Segua",
+          "Cartago",
+          "debate"
+        ],
+        "status": "publicado",
+        "pinned": false,
+        "likes": 96,
+        "views": 812,
+        "relatedLegendId": "leyenda-15"
+      },
+      {
+        "id": "p-3",
+        "categoryId": "c-4",
+        "title": "Protocolo de seguridad para visitar el Sanatorio Duran",
+        "excerpt": "Documento consolidado con horarios seguros, equipo recomendado y senales de alerta temprana.",
+        "body": "Este es el protocolo que usamos en el archivo para visitas nocturnas al Sanatorio: entrada antes de las 7:00 PM, salida antes de las 5:00 AM, siempre en compania, camara sin flash y bitacora de entrada y salida compartida.",
+        "authorId": "u-001",
+        "createdAt": "2025-09-15T08:00:00Z",
+        "updatedAt": "2025-09-15T08:00:00Z",
+        "tags": [
+          "seguridad",
+          "Sanatorio",
+          "protocolo"
+        ],
+        "status": "publicado",
+        "pinned": true,
+        "likes": 211,
+        "views": 2431,
+        "relatedLegendId": "leyenda-03"
+      },
+      {
+        "id": "p-4",
+        "categoryId": "c-3",
+        "title": "Expedicion al Faro de la Cruz: bitacora de 6 horas de archivo",
+        "excerpt": "Transcripcion completa de la bitacora: 14 eventos registrados, 2 clasificados como no explicables.",
+        "body": "Adjunto la transcripcion de la bitacora con marcas de tiempo, lecturas de temperatura ambiente y el audio capturado a las 02:14, donde se escucha un Canton sin presencia humana registrada.",
+        "authorId": "u-002",
+        "createdAt": "2025-09-18T16:45:00Z",
+        "updatedAt": "2025-09-18T16:45:00Z",
+        "tags": [
+          "Faro de la Cruz",
+          "bitacora",
+          "Guanacaste"
+        ],
+        "status": "publicado",
+        "pinned": false,
+        "likes": 74,
+        "views": 640,
+        "relatedLegendId": "leyenda-07"
+      },
+      {
+        "id": "p-5",
+        "categoryId": "c-1",
+        "title": "Lluvia de peces sobre el sector Drake: video original 4K",
+        "excerpt": "Grabacion sin cortes del fenomeno, con audio de canal separado.",
+        "body": "Subi el video completo sin edicion junto con el archivo de audio aislado del canal de mi camara. Cualquiera puede descargarlo.",
+        "authorId": "u-005",
+        "createdAt": "2025-09-20T05:10:00Z",
+        "updatedAt": "2025-09-20T05:10:00Z",
+        "tags": [
+          "lluvia de peces",
+          "Puntarenas",
+          "video"
+        ],
+        "status": "publicado",
+        "pinned": false,
+        "likes": 58,
+        "views": 402,
+        "relatedLegendId": "leyenda-09"
+      },
+      {
+        "id": "p-6",
+        "categoryId": "c-2",
+        "title": "Publicacion suspendida por el moderador",
+        "excerpt": "Contenido reportado por varios usuarios por discurso de odio. Se conserva unicamente para auditoria.",
+        "body": "Este contenido se conserva solo con fines de auditoria y permanece oculto en el listado publico.",
+        "authorId": "u-003",
+        "createdAt": "2025-09-19T11:00:00Z",
+        "updatedAt": "2025-09-19T12:10:00Z",
+        "tags": [
+          "auditoria",
+          "moderacion"
+        ],
+        "status": "oculto",
+        "pinned": false,
+        "likes": 0,
+        "views": 21,
+        "relatedLegendId": null
+      }
+    ],
+    "comments": [
+      {
+        "id": "c-01",
+        "postId": "p-1",
+        "authorId": "u-004",
+        "body": "Mi abuela lo vio en los 90. Confirmo que siempre eran las 11:11.",
+        "createdAt": "2025-09-12T21:02:00Z",
+        "likes": 12,
+        "status": "visible"
+      },
+      {
+        "id": "c-02",
+        "postId": "p-1",
+        "authorId": "u-001",
+        "body": "Reporte recibido. Aumento la clasificacion de evidencia a B. Buen aporte.",
+        "createdAt": "2025-09-13T08:20:00Z",
+        "likes": 30,
+        "status": "visible"
+      },
+      {
+        "id": "c-03",
+        "postId": "p-1",
+        "authorId": "u-002",
+        "body": "Alguien tiene la placa del bus? Seria clave para identificar el vehiculo original.",
+        "createdAt": "2025-09-13T13:44:00Z",
+        "likes": 4,
+        "status": "visible"
+      },
+      {
+        "id": "c-04",
+        "postId": "p-2",
+        "authorId": "u-003",
+        "body": "Para mi es una version local del aviso contra el riesgo nocturno. Dificil ignorarlo.",
+        "createdAt": "2025-09-08T18:30:00Z",
+        "likes": 22,
+        "status": "visible"
+      },
+      {
+        "id": "c-05",
+        "postId": "p-2",
+        "authorId": "u-001",
+        "body": "Excelente analisis. Anotado para el dossier de Cartago.",
+        "createdAt": "2025-09-09T10:05:00Z",
+        "likes": 15,
+        "status": "visible"
+      },
+      {
+        "id": "c-06",
+        "postId": "p-3",
+        "authorId": "u-005",
+        "body": "Aplique el protocolo en Quepos y funciono. Se lo pase a dos expediciones mas.",
+        "createdAt": "2025-09-15T12:00:00Z",
+        "likes": 9,
+        "status": "visible"
+      },
+      {
+        "id": "c-07",
+        "postId": "p-3",
+        "authorId": "u-002",
+        "body": "Sugiero agregar: kit de primeros auxilios y contacto de emergencia.",
+        "createdAt": "2025-09-15T15:12:00Z",
+        "likes": 18,
+        "status": "visible"
+      },
+      {
+        "id": "c-08",
+        "postId": "p-4",
+        "authorId": "u-003",
+        "body": "La marca de tiempo 02:14 coincide con mi registro. Caso documentado.",
+        "createdAt": "2025-09-18T19:00:00Z",
+        "likes": 11,
+        "status": "visible"
+      },
+      {
+        "id": "c-09",
+        "postId": "p-5",
+        "authorId": "u-004",
+        "body": "Fantastico. La lluvia empezo justo al atardecer?",
+        "createdAt": "2025-09-20T07:30:00Z",
+        "likes": 6,
+        "status": "visible"
+      },
+      {
+        "id": "c-10",
+        "postId": "p-5",
+        "authorId": "u-001",
+        "body": "Video verificado. Categorizado como evidencia audiovisual clase A.",
+        "createdAt": "2025-09-20T09:15:00Z",
+        "likes": 20,
+        "status": "visible"
+      }
+    ]
+  },
+  "expeditions": [
+    {
+      "id": "e-1",
+      "name": "Sanatorio Duran",
+      "province": "Cartago",
+      "date": "2025-10-31T21:00:00Z",
+      "difficulty": "Alta",
+      "capacity": 12,
+      "joined": 9,
+      "dangerLevel": 3,
+      "description": "Antiguo sanatorio con avistamientos de monjas y pasillos con voces.",
+      "contact": "https://wa.me/50600000000"
+    },
+    {
+      "id": "e-2",
+      "name": "Ruinas de Ujarras",
+      "province": "Cartago",
+      "date": "2025-11-15T22:00:00Z",
+      "difficulty": "Media",
+      "capacity": 20,
+      "joined": 14,
+      "dangerLevel": 2,
+      "description": "Ruinas coloniales con apariciones del Padre sin Cabeza.",
+      "contact": "https://wa.me/50600000000"
+    },
+    {
+      "id": "e-3",
+      "name": "Cerro de la Muerte",
+      "province": "San José",
+      "date": "2025-12-21T23:59:00Z",
+      "difficulty": "Media",
+      "capacity": 16,
+      "joined": 11,
+      "dangerLevel": 2,
+      "description": "Vigilia nocturna en el km 84 donde aparece el nino fantasma.",
+      "contact": "https://wa.me/50600000000"
+    },
+    {
+      "id": "e-4",
+      "name": "Bahia Ballena Nocturna",
+      "province": "Puntarenas",
+      "date": "2026-01-31T20:00:00Z",
+      "difficulty": "Baja",
+      "capacity": 24,
+      "joined": 19,
+      "dangerLevel": 1,
+      "description": "Ruta en lancha para avistar el barco fantasma de 1587.",
+      "contact": "https://wa.me/50600000000"
+    }
+  ],
+  "onboardingTips": [
+    {
+      "id": "t-1",
+      "icon": "map",
+      "title": "Tu primera expedicion: el mapa",
+      "message": "Desde el mapa puedes ver las leyendas de Costa Rica en su ubicacion real. Toca un marcador para leer la historia completa, escuchar el audio y ver su nivel de peligro.",
+      "route": "/mapa"
+    },
+    {
+      "id": "t-2",
+      "icon": "shield",
+      "title": "Cuidado con el nivel de riesgo",
+      "message": "Cada leyenda tiene un nivel de peligro de 1 a 4. Antes de organizar una visita, revisa la advertencia y el consejo de seguridad registrados en el archivo.",
+      "route": "/mapa"
+    },
+    {
+      "id": "t-3",
+      "icon": "users",
+      "title": "La comunidad te espera",
+      "message": "Con tu cuenta activa puedes entrar al foro: publicar testimonios, comentar hallazgos y responder a otros exploradores. Es un espacio privado, solo para miembros.",
+      "route": "/comunidad"
+    },
+    {
+      "id": "t-4",
+      "icon": "accessibility",
+      "title": "Personaliza tu experiencia visual",
+      "message": "Usa el boton de accesibilidad para cambiar entre modo claro y oscuro, ajustar el tamano del texto y activar modos para los daltonismos mas comunes.",
+      "route": null
+    },
+    {
+      "id": "t-5",
+      "icon": "lock",
+      "title": "Acceso restringido",
+      "message": "El foro, el panel de administracion y las proyecciones de IA son rutas privadas: se validan segun tu sesion y tu rol (usuario, moderador o administrador).",
+      "route": "/login"
+    }
+  ],
+  "metrics": {
+    "generatedAt": "2025-09-22T08:00:00Z",
+    "kpis": {
+      "totalUsers": 18432,
+      "activeUsers7d": 3267,
+      "mapVisits": 58210,
+      "forumPosts": 3146,
+      "forumComments": 22890,
+      "legendViews": 142780,
+      "avgSessionMinutes": 11.4,
+      "newUsersThisMonth": 428
+    },
+    "monthly": [
+      {
+        "month": "Oct",
+        "users": 980,
+        "visits": 3200,
+        "posts": 180
+      },
+      {
+        "month": "Nov",
+        "users": 1120,
+        "visits": 3580,
+        "posts": 205
+      },
+      {
+        "month": "Dic",
+        "users": 1310,
+        "visits": 4020,
+        "posts": 260
+      },
+      {
+        "month": "Ene",
+        "users": 1490,
+        "visits": 4380,
+        "posts": 241
+      },
+      {
+        "month": "Feb",
+        "users": 1620,
+        "visits": 4520,
+        "posts": 258
+      },
+      {
+        "month": "Mar",
+        "users": 1780,
+        "visits": 4890,
+        "posts": 276
+      },
+      {
+        "month": "Abr",
+        "users": 1910,
+        "visits": 5010,
+        "posts": 288
+      },
+      {
+        "month": "May",
+        "users": 2040,
+        "visits": 5320,
+        "posts": 301
+      },
+      {
+        "month": "Jun",
+        "users": 2210,
+        "visits": 5640,
+        "posts": 318
+      },
+      {
+        "month": "Jul",
+        "users": 2480,
+        "visits": 6210,
+        "posts": 342
+      },
+      {
+        "month": "Ago",
+        "users": 2760,
+        "visits": 6890,
+        "posts": 371
+      },
+      {
+        "month": "Sep",
+        "users": 3110,
+        "visits": 7470,
+        "posts": 415
+      }
+    ],
+    "byProvince": [
+      {
+        "province": "San José",
+        "visits": 18400,
+        "legends": 3
+      },
+      {
+        "province": "Cartago",
+        "visits": 12100,
+        "legends": 3
+      },
+      {
+        "province": "Puntarenas",
+        "visits": 8900,
+        "legends": 2
+      },
+      {
+        "province": "Guanacaste",
+        "visits": 7600,
+        "legends": 3
+      },
+      {
+        "province": "Heredia",
+        "visits": 5400,
+        "legends": 1
+      },
+      {
+        "province": "Alajuela",
+        "visits": 4100,
+        "legends": 1
+      },
+      {
+        "province": "Limón",
+        "visits": 1700,
+        "legends": 2
+      }
+    ],
+    "byRole": [
+      {
+        "role": "usuario",
+        "value": 16380
+      },
+      {
+        "role": "moderador",
+        "value": 142
+      },
+      {
+        "role": "admin",
+        "value": 9
+      }
+    ],
+    "aiUsage": [
+      {
+        "label": "admin",
+        "used": 6,
+        "limit": 10
+      },
+      {
+        "label": "mod_isabel",
+        "used": 4,
+        "limit": 10
+      },
+      {
+        "label": "explorador",
+        "used": 10,
+        "limit": 10
+      },
+      {
+        "label": "maria_cr",
+        "used": 2,
+        "limit": 10
+      },
+      {
+        "label": "tomas_p",
+        "used": 1,
+        "limit": 10
+      }
+    ]
+  },
+  "aiConfig": {
+    "model": "leyendas-oracle-v1",
+    "dailyLimitPerUser": 10,
+    "weights": {
+      "engagement": 0.45,
+      "retention": 0.3,
+      "contentSupply": 0.25
+    },
+    "horizons": [
+      30,
+      60,
+      90
+    ]
+  }
+}

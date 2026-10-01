@@ -1,0 +1,682 @@
+/**
+ * assets/accessibility.css
+ * -----------------------------------------------------------------------------
+ * Sistema de accesibilidad visual de LEYENDAS CR.
+ *
+ * Define tres paletas (dos temas + cuatro modos de color) mediante variables
+ * CSS en el elemento raiz `<html data-theme=... data-color-mode=...>`, de modo
+ * que ningun componente tenga que conocer la logica: solo consume variables.
+ *
+ *   1. Tema oscuro  -> negro absoluto / carbon, con acentos teal.
+ *   2. Tema claro   -> sigue siendo oscuro y elegante (nunca blanco puro),
+ *                      pero mas luminoso y con mayor contraste de texto.
+ *   3. Daltonismo   -> reasigna la paleta para que ningun par de colores
+ *                      quede indistinguible (azul/naranja en lugar de
+ *                      verde/rojo), y refuerza los niveles de riesgo con
+ *                      etiquetas y bordes, no solo con color.
+ *
+ * El tamano de texto se controla con `font-size` en el elemento raiz (rem),
+ * por lo que toda la interfaz escala de forma proporcional.
+ * -----------------------------------------------------------------------------
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEMA OSCURO (por defecto) - negro carbon
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root,
+html[data-theme='dark'] {
+  --bg-base: #020403;
+  --bg-elevated: #060d0a;
+  --bg-surface: #0a1512;
+  --bg-surface-2: #0e1c17;
+  --bg-inset: #030806;
+  --border-soft: rgba(0, 245, 212, 0.14);
+  --border-strong: rgba(0, 245, 212, 0.4);
+  --text-primary: #e6fff8;
+  --text-secondary: #9fcfc3;
+  --text-muted: #6c9a8e;
+  --accent: #00f5d4;
+  --accent-soft: rgba(0, 245, 212, 0.12);
+  --accent-strong: #00ccb0;
+  --shadow-card: 0 18px 50px rgba(0, 0, 0, 0.85);
+  --overlay: rgba(2, 4, 3, 0.88);
+  --map-filter: none;
+  color-scheme: dark;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEMA CLARO - tonalidades oscuras y elegante (nunca blanco puro)
+   ═══════════════════════════════════════════════════════════════════════════ */
+html[data-theme='light'] {
+  --bg-base: #101c18;
+  --bg-elevated: #16261f;
+  --bg-surface: #1c2f27;
+  --bg-surface-2: #243b31;
+  --bg-inset: #0b1512;
+  --border-soft: rgba(0, 245, 212, 0.22);
+  --border-strong: rgba(0, 245, 212, 0.55);
+  --text-primary: #f2fffb;
+  --text-secondary: #c2e8dc;
+  --text-muted: #96c4b6;
+  --accent: #2affe0;
+  --accent-soft: rgba(42, 255, 224, 0.14);
+  --accent-strong: #4fffe8;
+  --shadow-card: 0 16px 44px rgba(0, 0, 0, 0.55);
+  --overlay: rgba(10, 21, 18, 0.86);
+  color-scheme: dark;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MODOS DE DALTONISMO
+   Reasignan la paleta a combinaciones azul / ambar / violeta, distinguibles
+   en las tres formas mas comunes de daltonismo.
+   ═══════════════════════════════════════════════════════════════════════════ */
+html[data-color-mode='deuteranopia'] {
+  /* Verde y rojo -> azul y ambar */
+  --accent: #4aa8ff;
+  --accent-soft: rgba(74, 168, 255, 0.14);
+  --accent-strong: #7cc4ff;
+  --color-ok: #4aa8ff;
+  --color-alert: #ffb02e;
+  --color-danger: #ff8f3f;
+  --border-soft: rgba(74, 168, 255, 0.24);
+  --border-strong: rgba(74, 168, 255, 0.5);
+}
+
+html[data-color-mode='protanopia'] {
+  /* Rojo ausente -> cian, azul y amarillo */
+  --accent: #3fd0e0;
+  --accent-soft: rgba(63, 208, 224, 0.14);
+  --accent-strong: #6ee7f5;
+  --color-ok: #3fd0e0;
+  --color-alert: #ffd23f;
+  --color-danger: #ff9a3f;
+  --border-soft: rgba(63, 208, 224, 0.24);
+  --border-strong: rgba(63, 208, 224, 0.5);
+}
+
+html[data-color-mode='tritanopia'] {
+  /* Azul y amarillo -> rojo y verde (de nuevo, pero con mas contraste) */
+  --accent: #ff7ab8;
+  --accent-soft: rgba(255, 122, 184, 0.14);
+  --accent-strong: #ffa3cd;
+  --color-ok: #5ce08a;
+  --color-alert: #ff9f5c;
+  --color-danger: #ff5c5c;
+  --border-soft: rgba(255, 122, 184, 0.24);
+  --border-strong: rgba(255, 122, 184, 0.5);
+}
+
+/* Colores de estado disponibles tambien en modo normal. */
+:root {
+  --color-ok: #3bce7a;
+  --color-alert: #e0a93b;
+  --color-danger: #d02b3c;
+  --color-info: #7c5cff;
+}
+
+/* Contraste alto: incrementa bordes y texto sin cambiar la paleta. */
+html[data-contrast='high'] {
+  --border-soft: rgba(0, 245, 212, 0.45);
+  --border-strong: rgba(0, 245, 212, 0.9);
+  --text-secondary: #d6fff5;
+  --text-muted: #a8d8cb;
+  --shadow-card: 0 0 0 2px rgba(0, 245, 212, 0.25), 0 18px 50px rgba(0, 0, 0, 0.9);
+}
+
+/* Reduce el movimiento para usuarios sensibles a la animacion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE CON VARIABLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+}
+
+.app-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 10%, var(--accent-soft) 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg-base) 0%, var(--bg-elevated) 55%, var(--bg-base) 100%);
+  color: var(--text-primary);
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .app-container {
+    padding: 2rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SUPERFICIES
+   ═══════════════════════════════════════════════════════════════════════════ */
+.panel {
+  background: linear-gradient(160deg, var(--bg-surface) 0%, var(--bg-surface-2) 100%);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .panel {
+    padding: 1.75rem;
+  }
+}
+
+.panel-title {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.panel-subtitle {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+/* Tarjetas deLeyendas / articulos del foro */
+.card-surface {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-surface:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-card);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TIPOGRAFIA
+   ═══════════════════════════════════════════════════════════════════════════ */
+.text-primary {
+  color: var(--text-primary);
+}
+.text-secondary {
+  color: var(--text-secondary);
+}
+.text-muted {
+  color: var(--text-muted);
+}
+.text-accent {
+  color: var(--accent);
+}
+
+.heading-display {
+  font-family: 'UnifrakturMaguntia', 'Cinzel', serif;
+  letter-spacing: 0.08em;
+}
+
+.heading-gothic {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.1em;
+}
+
+/* Escala de texto: se aplica sobre el raiz (rem), de ahi el 100% global. */
+.text-scale-label {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  min-width: 3.2rem;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CONTROLES DE FORMULARIO
+   ═══════════════════════════════════════════════════════════════════════════ */
+.field-label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.field-input,
+.field-textarea,
+.field-select {
+  width: 100%;
+  background: var(--bg-inset);
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  color: var(--text-primary);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field-input::placeholder,
+.field-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.field-input:focus,
+.field-textarea:focus,
+.field-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.field-textarea {
+  min-height: 130px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.field-select option {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.field-error {
+  color: var(--color-danger);
+  font-size: 0.8rem;
+  margin-top: 0.35rem;
+}
+
+/* Foco visible en toda la aplicacion (navegacion por teclado). */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BOTONES
+   ═══════════════════════════════════════════════════════════════════════════ */
+.btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 6px;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  padding: 0.62rem 1.15rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.btn-base:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-accent {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-accent:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--bg-base);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--border-soft);
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-solid {
+  background: var(--accent);
+  color: var(--bg-base);
+  font-weight: 700;
+}
+
+.btn-solid:hover:not(:disabled) {
+  background: var(--accent-strong);
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INSIGNIAS (badges) Y NIVELES DE PELIGRO
+   Cada nivel combina color + etiqueta + borde: la informacion nunca depende
+   solo del color, algo essential en modos de daltonismo.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+
+.danger-1 { color: var(--color-ok); }
+.danger-2 { color: var(--color-alert); }
+.danger-3 { color: var(--color-danger); }
+.danger-4 { color: var(--color-danger); background: rgba(208, 43, 60, 0.14); }
+
+.badge-role {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TOASTS (notificaciones flotantes)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.toast-viewport {
+  position: fixed;
+  z-index: 1200;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .toast-viewport {
+    left: auto;
+    width: 380px;
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
+}
+
+.toast-card {
+  pointer-events: auto;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  background: linear-gradient(150deg, var(--bg-surface) 0%, var(--bg-inset) 100%);
+  border: 1px solid var(--border-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.85rem 0.95rem;
+  box-shadow: var(--shadow-card);
+  animation: toast-enter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.toast-icon {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.toast-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.toast-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.toast-message {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.3rem;
+  line-height: 1.5;
+}
+
+.toast-action {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--border-soft);
+  border-radius: 5px;
+  padding: 0.25rem 0.6rem;
+}
+
+.toast-close {
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.15rem;
+  border-radius: 4px;
+}
+
+.toast-close:hover {
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PANEL DE ACCESIBILIDAD (flotante)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.a11y-fab {
+  position: fixed;
+  right: 1rem;
+  bottom: 5.5rem;
+  z-index: 1100;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease;
+}
+
+.a11y-fab:hover {
+  transform: scale(1.06);
+}
+
+@media (max-width: 640px) {
+  .a11y-fab {
+    bottom: 4.5rem;
+    right: 0.75rem;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.a11y-panel {
+  position: fixed;
+  z-index: 1150;
+  right: 1rem;
+  bottom: 10.5rem;
+  width: min(340px, calc(100vw - 2rem));
+  max-height: 70vh;
+  overflow-y: auto;
+  background: linear-gradient(160deg, var(--bg-surface) 0%, var(--bg-inset) 100%);
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  padding: 1rem 1.1rem 1.2rem;
+  animation: toast-enter 0.25s ease;
+}
+
+@media (max-width: 640px) {
+  .a11y-panel {
+    right: 0.75rem;
+    left: 0.75rem;
+    bottom: 9.5rem;
+    width: auto;
+  }
+}
+
+.a11y-group + .a11y-group {
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.a11y-option {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  padding: 0.55rem 0.6rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.a11y-option:hover {
+  border-color: var(--border-soft);
+  background: var(--accent-soft);
+}
+
+.a11y-option[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+.a11y-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NAVBAR / FOOTER
+   ═══════════════════════════════════════════════════════════════════════════ */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--overlay);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.nav-link {
+  position: relative;
+  padding: 0.4rem 0.2rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: 'Cinzel', serif;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: var(--accent);
+}
+
+.nav-link-active {
+  color: var(--accent);
+}
+
+.nav-link-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.35rem;
+  height: 1px;
+  background: var(--accent);
+}
+
+.footer {
+  border-top: 1px solid var(--border-soft);
+  background: var(--bg-inset);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILIDADES
+   ═══════════════════════════════════════════════════════════════════════════ */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+  border: none;
+}
+
+.scroll-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: var(--accent-soft);
+  border-radius: 3px;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-surface-2) 50%, var(--bg-surface) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.4s infinite;
+  border-radius: 6px;
+}
+
+@keyframes skeleton-pulse {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* Tabla responsive: en movil cada fila se convierte en una tarjeta. */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

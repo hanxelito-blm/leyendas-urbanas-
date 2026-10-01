@@ -1,0 +1,302 @@
+[
+  {
+    "id": "leyenda-01",
+    "title": "La Carreta sin Bueyes",
+    "category": "Mito Tradicional",
+    "province": "San José",
+    "coordinates": [
+      9.9333,
+      -84.0833
+    ],
+    "locationName": "San José Centro",
+    "shortDescription": "El misterioso crujido de madera resonando en la medianoche...",
+    "fullStory": "Cuentan que en las noches silenciosas se escucha el retumbar de una carreta de madera desvencijada recorriendo las calles empedradas sin animales que la arrastren, presagio de desgracia para quien la vea. Los más ancianos del barrio aseguran que el conductor es un alma en pena que busca redención, y su aparición anuncia desgracias inevitables.",
+    "creatureImageUrl": "/images/carreta-sin-bueyes.jpg",
+    "imageUrl": "/images/carreta-sin-bueyes.jpg",
+    "yearOrEra": "Siglo XIX",
+    "dangerLevel": 2,
+    "dangerLabel": "Inquietante",
+    "dangerDescription": "Su aparición presagia desgracias. No es agresiva, pero verla trae mala suerte.",
+    "audioUrl": "/audio/leyenda-01.mp3"
+  },
+  {
+    "id": "leyenda-02",
+    "title": "El Ente del Faro Abandonado",
+    "category": "Historia Urbana",
+    "province": "Puntarenas",
+    "coordinates": [
+      9.9763,
+      -84.8384
+    ],
+    "locationName": "Puntarenas",
+    "shortDescription": "Luces extrañas que parpadean en la vieja estructura frente al mar.",
+    "fullStory": "Los pescadores locales juran que cuando la marea sube a medianoche, la linterna del faro destruido se enciende sola guiando a barcos fantasmales hacia la costa. Dicen que el último farero, don Ramón, se negó a abandonar su puesto durante una tormenta mortal y su espíritu permanece encendiendo la luz.",
+    "creatureImageUrl": "/images/faro-abandonado.jpg",
+    "imageUrl": "/images/faro-abandonado.jpg",
+    "yearOrEra": "Años 70",
+    "dangerLevel": 3,
+    "dangerLabel": "Peligroso",
+    "dangerDescription": "El ente atrae a los incautos hacia el mar en noches de tormenta. No te acerques al agua.",
+    "audioUrl": "/audio/leyenda-02.mp3"
+  },
+  {
+    "id": "leyenda-03",
+    "title": "El Sanatorio Durán",
+    "category": "Historia Urbana",
+    "province": "Cartago",
+    "coordinates": [
+      9.8942,
+      -83.8583
+    ],
+    "locationName": "Tierra Blanca, Cartago",
+    "shortDescription": "Lamentos y figuras fantasmales en los pasillos del viejo hospital.",
+    "fullStory": "Antiguo sanatorio para enfermos de tuberculosis. Hoy en día, visitantes y cuidadores aseguran ver la silueta de una monja y niños corriendo por los pasillos oscuros. El olor a éter y hierbas medicinales nunca se fue del todo.",
+    "creatureImageUrl": "/images/sanatorio-duran.jpg",
+    "imageUrl": "/images/sanatorio-duran.jpg",
+    "yearOrEra": "Siglo XX",
+    "dangerLevel": 4,
+    "dangerLabel": "Muy Peligroso",
+    "dangerDescription": "Visitantes han salido aterrorizados. Fenómenos físicos reportados: puertas que se cierran solas, sombras que tocan.",
+    "audioUrl": "/audio/leyenda-03.mp3"
+  },
+  {
+    "id": "leyenda-04",
+    "title": "El Cadejos",
+    "category": "Mito Tradicional",
+    "province": "Guanacaste",
+    "coordinates": [
+      10.6267,
+      -85.4433
+    ],
+    "locationName": "Liberia, Guanacaste",
+    "shortDescription": "Un perro espectral de ojos brasas que acecha en los caminos solitarios.",
+    "fullStory": "En los caminos de tierra de Guanacaste, cuando el sol se pone y la neblina cubre los potreros, aparece el Cadejos: un perro negro inmenso con ojos como brasas ardientes. Hay dos: el blanco, que protege a los viajeros de buen corazón, y el negro, que persigue a los pecadores y borrachos hasta enloquecerlos.",
+    "creatureImageUrl": "/images/el-cadejos.jpg",
+    "imageUrl": "/images/el-cadejos.jpg",
+    "yearOrEra": "Era Colonial",
+    "dangerLevel": 3,
+    "dangerLabel": "Peligroso",
+    "dangerDescription": "El Cadejos negro puede seguirte hasta tu hogar. Si caminas solo de noche, reza.",
+    "audioUrl": "/audio/leyenda-04.mp3"
+  },
+  {
+    "id": "leyenda-05",
+    "title": "La Llorona del Río Virilla",
+    "category": "Mito Tradicional",
+    "province": "Heredia",
+    "coordinates": [
+      9.9981,
+      -84.1167
+    ],
+    "locationName": "Río Virilla, Heredia",
+    "shortDescription": "El lamento de una madre que ahogó a sus hijos y ahora los busca eternamente.",
+    "fullStory": "Cuenta la leyenda que una mujer despechada ahogó a sus dos hijos en el Río Virilla y, arrepentida, se lanzó tras ellos. Su espíritu no encuentra paz y deambula por las orillas del río en las noches de luna llena, llorando y llamando a sus pequeños.",
+    "creatureImageUrl": "/images/llorona-virilla.jpg",
+    "imageUrl": "/images/llorona-virilla.jpg",
+    "yearOrEra": "Siglo XX",
+    "dangerLevel": 4,
+    "dangerLabel": "Muy Peligroso",
+    "dangerDescription": "Atrae a niños y adultos hacia el río. Nunca te acerques al agua si escuchas su llanto.",
+    "audioUrl": "/audio/leyenda-05.mp3"
+  },
+  {
+    "id": "leyenda-06",
+    "title": "La Bruja de Escazú",
+    "category": "Mito Tradicional",
+    "province": "San José",
+    "coordinates": [
+      9.9167,
+      -84.1667
+    ],
+    "locationName": "Cerro San Miguel, Escazú",
+    "shortDescription": "Vuelos nocturnos y pactos oscuros en las montañas del oeste.",
+    "fullStory": "Escazú, conocida como 'La Ciudad de las Brujas', esconde secretos ancestrales en sus cerros. Cuentan que doña Francisca, una curandera del siglo XIX, hizo un pacto con fuerzas oscuras para obtener poderes de sanación. En las noches de San Juan, las brujas se reúnen en la cueva del Cerro San Miguel.",
+    "creatureImageUrl": "/images/bruja-escazu.jpg",
+    "imageUrl": "/images/bruja-escazu.jpg",
+    "yearOrEra": "Siglo XIX",
+    "dangerLevel": 3,
+    "dangerLabel": "Peligroso",
+    "dangerDescription": "Las brujas pueden lanzar maleficios a quien las interrumpa en sus rituales nocturnos.",
+    "audioUrl": "/audio/leyenda-06.mp3"
+  },
+  {
+    "id": "leyenda-07",
+    "title": "El Monstruo del Lago de Arenal",
+    "category": "Mito Tradicional",
+    "province": "Alajuela",
+    "coordinates": [
+      10.4667,
+      -84.9333
+    ],
+    "locationName": "Lago Arenal, Alajuela",
+    "shortDescription": "Una criatura ancestral que duerme en el fondo del volcán dormido.",
+    "fullStory": "Antes de que el lago fuera artificial, los indígenas huetares adoraban a una serpiente emplumada que dormía en el cráter del volcán Arenal. Cuando la erupción de 1968 sepultó los pueblos, la criatura despertó. Pescadores reportan ver una sombra inmensa moviéndose bajo la superficie.",
+    "creatureImageUrl": "/images/monstruo-arenal.jpg",
+    "imageUrl": "/images/monstruo-arenal.jpg",
+    "yearOrEra": "1968",
+    "dangerLevel": 4,
+    "dangerLabel": "Muy Peligroso",
+    "dangerDescription": "La criatura puede volcar embarcaciones pequeñas. Varios pescadores han desaparecido sin rastro.",
+    "audioUrl": "/audio/leyenda-07.mp3"
+  },
+  {
+    "id": "leyenda-08",
+    "title": "El Tesoro de los Piratas en Isla del Coco",
+    "category": "Historia Urbana",
+    "province": "Puntarenas",
+    "coordinates": [
+      5.5333,
+      -87.0667
+    ],
+    "locationName": "Isla del Coco",
+    "shortDescription": "Oro maldito enterrado por corsarios que nadie ha podido recuperar.",
+    "fullStory": "La Isla del Coco, a 500 km de la costa, guarda uno de los tesoros más codiciados del Pacífico. Cuentan que el pirata Benito Bonito enterró allí toneladas de oro robado en 1820. Quienes han intentado encontrarlo han muerto en extrañas circunstancias.",
+    "creatureImageUrl": "/images/tesoro-piratas.jpg",
+    "imageUrl": "/images/tesoro-piratas.jpg",
+    "yearOrEra": "1820",
+    "dangerLevel": 2,
+    "dangerLabel": "Inquietante",
+    "dangerDescription": "La maldición del oro pirata. Quienes buscan el tesoro sufren accidentes inexplicables.",
+    "audioUrl": "/audio/leyenda-08.mp3"
+  },
+  {
+    "id": "leyenda-09",
+    "title": "El Padre sin Cabeza de Orosi",
+    "category": "Historia Urbana",
+    "province": "Cartago",
+    "coordinates": [
+      9.8167,
+      -83.85
+    ],
+    "locationName": "Valle de Orosi",
+    "shortDescription": "Un sacerdote decapitado que busca su cabeza por los cafetales eternamente.",
+    "fullStory": "En el valle de Orosi, entre cafetales y ruinas coloniales, deambula el espíritu de fray Antonio, un sacerdote decapitado por piratas en 1666. Su cabeza rodó por la colina hasta el río Reventazón, y su cuerpo sin cabeza sigue buscándola cada noche.",
+    "creatureImageUrl": "/images/padre-sin-cabeza.jpg",
+    "imageUrl": "/images/padre-sin-cabeza.jpg",
+    "yearOrEra": "1666",
+    "dangerLevel": 3,
+    "dangerLabel": "Peligroso",
+    "dangerDescription": "El espíritu confunde a los viajeros y los extravía entre los cafetales en noches sin luna.",
+    "audioUrl": "/audio/leyenda-09.mp3"
+  },
+  {
+    "id": "leyenda-10",
+    "title": "La Segua",
+    "category": "Colonial",
+    "province": "Cartago",
+    "coordinates": [
+      10.3,
+      -85.25
+    ],
+    "locationName": "Nicoya, Guanacaste",
+    "shortDescription": "Mujer hermosa que se transforma en caballo esquelético para castigar infieles.",
+    "fullStory": "Cuentan los abuelos que en las noches oscuras, por los caminos solitarios de Cartago, se aparece una mujer de figura esbelta y hermosa. Seduce a los hombres infieles y vanidosos, y cuando están solos en el camino, su rostro se vuelve una calavera de caballo con ojos de fuego. Muchos han enloquecido tras verla.",
+    "creatureImageUrl": "/images/la-segua.jpg",
+    "imageUrl": "/images/la-segua.jpg",
+    "yearOrEra": "Era Colonial",
+    "dangerLevel": 5,
+    "dangerLabel": "Extremadamente Peligroso",
+    "dangerDescription": "Conduce a la locura permanente. Decenas de hombres han perdido la razón tras encontrarla. EVITA los caminos solitarios de noche.",
+    "audioUrl": "/audio/leyenda-10.mp3"
+  },
+  {
+    "id": "leyenda-11",
+    "title": "El Barco Fantasma de Bahía Ballena",
+    "category": "Historia Urbana",
+    "province": "Puntarenas",
+    "coordinates": [
+      9.1167,
+      -83.7333
+    ],
+    "locationName": "Bahía Ballena, Uvita",
+    "shortDescription": "Un galeón español que navega en noches de tormenta sin tripulación visible.",
+    "fullStory": "En la cola de la ballena que forma la bahía, cuando las tormentas azotan el Pacífico, surge de la niebla un galeón español del siglo XVI con velas rotas. No hay tripulación, solo el crujido de la madera y el canto de sirenas que atrae a los pescadores imprudentes.",
+    "creatureImageUrl": "/images/barco-fantasma.jpg",
+    "imageUrl": "/images/barco-fantasma.jpg",
+    "yearOrEra": "1587",
+    "dangerLevel": 4,
+    "dangerLabel": "Muy Peligroso",
+    "dangerDescription": "El canto de las sirenas puede atraerte al agua. Varios pescadores desaparecieron en tormentas donde se reportó el barco.",
+    "audioUrl": "/audio/leyenda-11.mp3"
+  },
+  {
+    "id": "leyenda-12",
+    "title": "La Mona de Limón",
+    "category": "Mito Tradicional",
+    "province": "Limón",
+    "coordinates": [
+      9.9933,
+      -83.0333
+    ],
+    "locationName": "Puerto Limón",
+    "shortDescription": "Espíritu travieso que protege la selva y castiga a quien la daña.",
+    "fullStory": "En los manglares y selvas de Limón, la Mona es un espíritu guardián que toma la forma de una mujer mono de pelaje negro y ojos dorados. Protege los árboles sagrados y castiga a los taladores: les confunde los caminos, les rompe las herramientas y les susurra en sueños hasta enloquecerlos.",
+    "creatureImageUrl": "/images/la-mona.jpg",
+    "imageUrl": "/images/la-mona.jpg",
+    "yearOrEra": "Tradición Afrocaribeña",
+    "dangerLevel": 2,
+    "dangerLabel": "Inquietante",
+    "dangerDescription": "Solo actúa contra quienes dañan la selva. Si respetas el bosque, ella te respetará.",
+    "audioUrl": "/audio/leyenda-12.mp3"
+  },
+  {
+    "id": "leyenda-13",
+    "title": "El Diablo de la Catedral de Cartago",
+    "category": "Historia Urbana",
+    "province": "Cartago",
+    "coordinates": [
+      9.8667,
+      -83.9167
+    ],
+    "locationName": "Ruinas de Santiago Apóstol",
+    "shortDescription": "El pacto que maldijo la construcción eterna de la catedral inacabada.",
+    "fullStory": "Las ruinas de la Catedral de Santiago Apóstol en Cartago llevan siglos sin terminarse. Cuentan que el arquitecto, desesperado por los terremotos que derribaban su obra, hizo un pacto con el diablo: le daría su alma a cambio de una iglesia que nunca cayera.",
+    "creatureImageUrl": "/images/diablo-cartago.jpg",
+    "imageUrl": "/images/diablo-cartago.jpg",
+    "yearOrEra": "Siglo XVI-XIX",
+    "dangerLevel": 3,
+    "dangerLabel": "Peligroso",
+    "dangerDescription": "Se reportan apariciones del diablo en las ruinas a medianoche. La maldición del pacto aún persiste.",
+    "audioUrl": "/audio/leyenda-13.mp3"
+  },
+  {
+    "id": "leyenda-14",
+    "title": "La Llorona de los Cañales de Tortuguero",
+    "category": "Mito Tradicional",
+    "province": "Limón",
+    "coordinates": [
+      10.5333,
+      -83.5
+    ],
+    "locationName": "Parque Nacional Tortuguero",
+    "shortDescription": "Lamento de una madre que perdió a su hija en los canales, busca entre la vegetación.",
+    "fullStory": "En el laberinto de canales de Tortuguero, donde el agua es espejo y la selva toca el cielo, deambula una Llorona distinta: no ahogó a sus hijos, los perdió. Doña Carmen buscaba a su hija pequeña, arrancada por una corriente traicionera mientras lavaba ropa.",
+    "creatureImageUrl": "/images/llorona-tortuguero.jpg",
+    "imageUrl": "/images/llorona-tortuguero.jpg",
+    "yearOrEra": "Años 50",
+    "dangerLevel": 3,
+    "dangerLabel": "Peligroso",
+    "dangerDescription": "Su llanto confunde a los balseros. Han habido accidentes en los canales la misma noche que se escuchó su lamento.",
+    "audioUrl": "/audio/leyenda-14.mp3"
+  },
+  {
+    "id": "leyenda-15",
+    "title": "El Niño del Cerro de la Muerte",
+    "category": "Historia Urbana",
+    "province": "San José",
+    "coordinates": [
+      9.55,
+      -83.75
+    ],
+    "locationName": "Cerro de la Muerte, km 84",
+    "shortDescription": "Un niño que aparece en la carretera pidiendo aventón y desaparece al subir.",
+    "fullStory": "En el tramo más alto de la Interamericana, donde la niebla lo cubre todo y el frío cala los huesos, aparece un niño de unos 7 años, vestido con ropa antigua y mojada. Pide aventón a los conductores solitarios, y si lo suben, se sienta en silencio. Al pasar el kilómetro 84, el conductor mira al retrovisor: el asiento está vacío.",
+    "creatureImageUrl": "/images/nino-cerro-muerte.jpg",
+    "imageUrl": "/images/nino-cerro-muerte.jpg",
+    "yearOrEra": "1970-presente",
+    "dangerLevel": 5,
+    "dangerLabel": "Extremadamente Peligroso",
+    "dangerDescription": "Varios conductores han sufrido accidentes graves minutos después de recogerlo. Causa pánico y pérdida de control del vehículo.",
+    "audioUrl": "/audio/leyenda-15.mp3"
+  }
+]
