@@ -20,6 +20,7 @@ import {
   getPostWithComments,
   createPost,
   createComment,
+  toggleCommentLike,
   moderatePost,
   getModerationQueue,
 } from '../services/forumService'
@@ -86,13 +87,27 @@ export default function CommunityForum() {
     }
   }
 
-  const handleComment = async (post, body) => {
+  const handleComment = async (post, body, parentId = null) => {
     try {
-      await createComment({ postId: post.id, authorId: user.id, body })
+      const createdComment = await createComment({ postId: post.id, authorId: user.id, body, parentId })
       toast.success('Respuesta publicada', 'Tu comentario se sumo al hilo.')
-      setPosts((prev) => prev)
+      return createdComment
     } catch (error) {
       toast.error('No se pudo comentar', error.message)
+      return null
+    }
+  }
+
+  const handleCommentLike = async (commentId) => {
+    try {
+      const result = await toggleCommentLike(commentId, user.id)
+      if (!result.success) {
+        toast.info('Voto registrado', result.message || 'Ya habias reaccionado a este comentario.')
+      }
+      return result
+    } catch (error) {
+      toast.error('No se pudo registrar el me gusta', error.message)
+      return { success: false, likes: 0, message: error.message }
     }
   }
 
@@ -111,7 +126,8 @@ export default function CommunityForum() {
         categories={categories}
         legends={legends}
         onBack={() => navigate('/comunidad')}
-        onComment={(body) => handleComment({ id: postId }, body)}
+        onComment={(body, parentId) => handleComment({ id: postId }, body, parentId)}
+        onLike={handleCommentLike}
         canModerate={can('forum:moderate')}
         onToggleStatus={handleToggleStatus}
       />
@@ -342,7 +358,7 @@ function NewPostForm({ categories, legends, onSubmit, onCancel }) {
    Detalle de una publicacion con sus respuestas
    ═══════════════════════════════════════════════════════════════════════════ */
 
-function PostDetail({ postId, users, categories, legends, onBack, onComment, canModerate, onToggleStatus }) {
+function PostDetail({ postId, users, categories, legends, onBack, onComment, onLike, canModerate, onToggleStatus }) {
   const [data, setData] = useState(null)
   const [notFound, setNotFound] = useState(false)
 
@@ -408,7 +424,7 @@ function PostDetail({ postId, users, categories, legends, onBack, onComment, can
         </p>
       </article>
 
-      <CommentList comments={comments} authors={users} onSubmit={onComment} />
+      <CommentList comments={comments} authors={users} onSubmit={onComment} onReply={onComment} onLike={onLike} />
     </div>
   )
 }

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" fill="none">
+  <defs>
+    <linearGradient id="wolf-fur" x1="236" y1="172" x2="776" y2="450" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#39433d"/>
+      <stop offset=".42" stop-color="#1a211d"/>
+      <stop offset="1" stop-color="#080c0a"/>
+    </linearGradient>
+    <linearGradient id="wolf-leg" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#242c27"/>
+      <stop offset="1" stop-color="#080b09"/>
+    </linearGradient>
+    <linearGradient id="wolf-flame" x1="170" y1="482" x2="690" y2="302" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9e2118" stop-opacity="0"/>
+      <stop offset=".55" stop-color="#e44920" stop-opacity=".78"/>
+      <stop offset="1" stop-color="#ffbd48"/>
+    </linearGradient>
+    <radialGradient id="wolf-eye">
+      <stop stop-color="#fff4b5"/>
+      <stop offset=".38" stop-color="#ffb52f"/>
+      <stop offset="1" stop-color="#de4119"/>
+    </radialGradient>
+    <filter id="wolf-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .wolf-body { transform-box: fill-box; transform-origin: 52% 80%; animation: wolf-bob .62s ease-in-out infinite; }
+      .wolf-leg-near { transform-box: fill-box; transform-origin: 50% 8%; animation: wolf-stride-a .62s ease-in-out infinite; }
+      .wolf-leg-far { transform-box: fill-box; transform-origin: 50% 8%; animation: wolf-stride-b .62s ease-in-out infinite; }
+      .wolf-tail { transform-box: fill-box; transform-origin: 96% 78%; animation: wolf-tail-sway .9s ease-in-out infinite alternate; }
+      .wolf-head { transform-box: fill-box; transform-origin: 12% 72%; animation: wolf-head-drive .62s ease-in-out infinite alternate; }
+      .wolf-fire { transform-box: fill-box; transform-origin: 50% 100%; animation: wolf-fire-flicker .36s ease-in-out infinite alternate; }
+      .wolf-eye { animation: wolf-eye-pulse 1s ease-in-out infinite alternate; }
+      @keyframes wolf-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+      @keyframes wolf-stride-a { 0%,100% { transform: rotate(17deg); } 50% { transform: rotate(-19deg); } }
+      @keyframes wolf-stride-b { 0%,100% { transform: rotate(-18deg); } 50% { transform: rotate(18deg); } }
+      @keyframes wolf-tail-sway { from { transform: rotate(-3deg); } to { transform: rotate(7deg); } }
+      @keyframes wolf-head-drive { from { transform: translateX(0) rotate(0); } to { transform: translateX(4px) rotate(-1deg); } }
+      @keyframes wolf-fire-flicker { from { transform: scaleY(.9); opacity: .54; } to { transform: scaleY(1.08); opacity: .88; } }
+      @keyframes wolf-eye-pulse { from { opacity: .72; } to { opacity: 1; } }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+    </style>
+  </defs>
+
+  <ellipse cx="500" cy="478" rx="348" ry="32" fill="#000" opacity=".5"/>
+
+  <g class="wolf-fire" opacity=".78">
+    <path d="M188 455c-24-40 23-70 5-116 40 26 34 54 57 74-4-54 39-76 30-126 47 38 36 78 69 105 17-47 56-68 50-117 53 43 43 81 65 110 24-37 22-68 12-94 60 45 39 91 75 119 29-27 36-55 31-79 44 41 50 76 24 107-84 39-322 47-418 17Z" fill="url(#wolf-flame)"/>
+  </g>
+
+  <g class="wolf-leg-far">
+    <path d="M371 334c-3 39-10 70-29 98l-42 26c-10 7-5 20 7 21l77-2c17 0 26-14 19-29l-9-19 27-82Z" fill="#101613" stroke="#303a34" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m302 464 17-8m10 16 15-10m11 11 14-10" stroke="#9a927e" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <g class="wolf-leg-far">
+    <path d="M593 329c11 36 14 66 4 96l-33 34c-8 9 0 21 12 20l77-16c17-4 22-20 11-33l-15-18-2-84Z" fill="#0e1310" stroke="#303a34" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m574 465 14-12m12 15 13-13m12 10 12-13" stroke="#9a927e" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <g class="wolf-tail">
+    <path d="M287 315c-62-8-115-30-154-65-34-31-51-66-46-97 4-28 24-49 49-53 24-4 44 10 49 31-20-9-40-5-52 11-14 19-8 47 10 73 25 35 71 63 139 83Z" fill="url(#wolf-leg)" stroke="#3c4740" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M112 124c-11 20-13 39-7 58 12-12 26-18 42-18-8-16-19-29-35-40Z" fill="#a13b25" opacity=".76"/>
+    <path d="M157 264c-24-18-42-38-53-60m111 99c-33-12-60-28-81-49" stroke="#68736a" stroke-width="6" stroke-linecap="round" opacity=".35"/>
+  </g>
+
+  <g class="wolf-body">
+    <path d="M255 293c20-56 77-88 147-87 57-32 139-31 211 0 49 21 79 54 94 94l-14 55c-40 39-105 54-169 38-58 22-139 15-196-11-60-28-91-49-73-89Z" fill="url(#wolf-fur)" stroke="#465149" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M310 258c40-29 88-39 135-31m-103 58c43-21 88-26 130-19m-93 47c36-12 70-13 105-6" stroke="#849087" stroke-width="7" stroke-linecap="round" opacity=".2"/>
+  </g>
+
+  <g class="wolf-leg-near">
+    <path d="M428 337c9 36 5 69-8 99l-38 25c-10 7-6 20 7 21l78-2c17 0 25-15 17-30l-12-22 17-82Z" fill="url(#wolf-leg)" stroke="#354039" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m394 466 16-9m10 17 15-10m12 11 14-10" stroke="#aaa087" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <g class="wolf-leg-near">
+    <path d="M636 325c21 34 31 68 27 104l-26 37c-7 10 1 21 13 18l73-27c16-6 19-22 6-34l-19-16-17-83Z" fill="url(#wolf-leg)" stroke="#354039" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m646 468 14-14m9 19 13-15m11 12 13-14" stroke="#aaa087" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <g class="wolf-head">
+    <path d="M655 277c8-38 34-70 71-91l-7-57c-2-12 8-19 18-12l41 34c35-15 72-11 102 9l-26 31c39 2 72 17 95 45 10 12 4 27-11 31l-42 9c-21 28-53 43-92 42l-58-14c-27 18-57 14-77-7Z" fill="url(#wolf-fur)" stroke="#465149" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M715 174c-5-30 0-54 15-75 20 21 29 45 27 72" fill="#111714" stroke="#78847a" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M792 151c26-15 54-17 82-7l-30 32" fill="#111714" stroke="#78847a" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M751 216c17-16 39-22 61-15" stroke="#879188" stroke-width="6" stroke-linecap="round" opacity=".32"/>
+    <g class="wolf-eye" filter="url(#wolf-glow)">
+      <path d="M759 196c14-12 29-12 42 0-13 12-28 12-42 0Z" fill="url(#wolf-eye)"/>
+      <ellipse cx="780" cy="196" rx="3" ry="7" fill="#120b05"/>
+    </g>
+    <path d="M841 219c22-9 42-7 60 4l-17 14-39 1-27-10Z" fill="#151b17" stroke="#78847a" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M880 227 921 237l-31 18-35-8Z" fill="#080b09" stroke="#90998f" stroke-width="5" stroke-linejoin="round"/>
+    <ellipse cx="906" cy="238" rx="5" ry="4" fill="#303a34"/>
+    <path d="M846 250c26 9 49 6 68-8l-15 25c-19 10-39 9-57-4Z" fill="#080a09" stroke="#535d55" stroke-width="4" stroke-linejoin="round"/>
+    <path d="m857 253 7 14 9-6 8 15 8-15 8 6 7-15" fill="#e7dac0" stroke="#aea188" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+</svg>

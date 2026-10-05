@@ -12,13 +12,17 @@ import { getUsers, getForumCategories } from '../../services/dbService'
 import { useToast } from '../../context/ToastContext'
 import PostCard from '../forum/PostCard'
 
-export default function ModerationView() {
+export default function ModerationView({ openQueueRequest = 0 }) {
   const [posts, setPosts] = useState([])
   const [queueCount, setQueueCount] = useState(0)
   const [users, setUsers] = useState([])
   const [categories, setCategories] = useState([])
   const [filter, setFilter] = useState('todos')
   const toast = useToast()
+
+  useEffect(() => {
+    if (openQueueRequest > 0) setFilter('revision')
+  }, [openQueueRequest])
 
   useEffect(() => {
     let active = true
@@ -41,10 +45,11 @@ export default function ModerationView() {
     return acc
   }, {}), [users])
 
-  const visible = useMemo(
-    () => (filter === 'todos' ? posts : posts.filter((post) => post.status === filter)),
-    [posts, filter]
-  )
+  const visible = useMemo(() => {
+    if (filter === 'todos') return posts
+    if (filter === 'revision') return posts.filter((post) => post.status !== 'publicado')
+    return posts.filter((post) => post.status === filter)
+  }, [posts, filter])
 
   const handleToggle = async (postId, action) => {
     const result = await moderatePost(postId, action)
@@ -68,7 +73,7 @@ export default function ModerationView() {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          {['todos', 'publicado', 'oculto', 'pendiente'].map((option) => (
+          {['todos', 'revision', 'publicado', 'oculto', 'pendiente'].map((option) => (
             <button
               key={option}
               type="button"
@@ -77,7 +82,7 @@ export default function ModerationView() {
               aria-pressed={filter === option}
               onClick={() => setFilter(option)}
             >
-              {option}
+              {option === 'revision' ? 'por revisar' : option}
             </button>
           ))}
         </div>

@@ -15,13 +15,21 @@ const USERS_KEY = 'registered-users'
 const delay = (ms = 450) => new Promise((resolve) => setTimeout(resolve, ms))
 
 async function requestAuth(path, payload) {
-  const response = await fetch(path, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  })
-  const result = await response.json()
-  return { response, result }
+  const controller = new AbortController()
+  const timeoutId = window.setTimeout(() => controller.abort(), 10000)
+
+  try {
+    const response = await fetch(path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    })
+    const result = await response.json()
+    return { response, result }
+  } finally {
+    window.clearTimeout(timeoutId)
+  }
 }
 
 function sanitize(user) {

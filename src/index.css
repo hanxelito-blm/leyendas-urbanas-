@@ -1447,3 +1447,349 @@ html[data-color-mode='tritanopia'] .leaflet-tile-pane {
   100% { transform: translate3d(2%, -2%, 0) scale(1.06); }
 }
 
+.cadejo-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 52%, rgba(29, 56, 48, 0.62), transparent 57%),
+    #030706;
+  transition: background 0.8s ease;
+}
+
+.cadejo-transition::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse at center, transparent 28%, rgba(0, 0, 0, 0.8) 100%);
+  content: '';
+}
+
+.cadejo-transition::after {
+  position: absolute;
+  inset: -15%;
+  z-index: 0;
+  content: '';
+  opacity: 0;
+}
+
+.cadejo-transition-attack {
+  animation: cadejo-scene-impact 0.9s ease both;
+}
+
+.cadejo-transition-attack::after {
+  background: radial-gradient(ellipse at center, rgba(255, 53, 53, 0.92), rgba(120, 8, 20, 0.32) 24%, rgba(36, 0, 0, 0.1) 58%, transparent 72%);
+  animation: cadejo-strike-flash 0.9s ease both;
+}
+
+.cadejo-transition-voice {
+  background: radial-gradient(ellipse at center, rgba(26, 50, 42, 0.8), #030706 68%);
+}
+
+.cadejo-transition-storm {
+  background: radial-gradient(ellipse at center, rgba(31, 52, 66, 0.8), #03070a 72%);
+}
+
+.cadejo-transition-storm::after {
+  background: radial-gradient(ellipse at 55% 40%, rgba(219, 238, 255, 0.92), rgba(117, 161, 200, 0.25) 28%, transparent 66%);
+  animation: cadejo-lightning-flash 1.85s ease-out both;
+}
+
+.cadejo-skip-button {
+  position: absolute;
+  z-index: 4;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  border: 1px solid rgba(229, 239, 229, 0.48);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: rgba(3, 7, 6, 0.72);
+  color: #e6eee7;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.cadejo-skip-button:hover,
+.cadejo-skip-button:focus-visible {
+  border-color: #fff0a8;
+  background: rgba(29, 56, 48, 0.9);
+}
+
+.cadejo-skip-button:focus-visible {
+  outline: 2px solid #fff0a8;
+  outline-offset: 3px;
+}
+
+.cadejo-runner {
+  position: absolute;
+  left: 50%;
+  top: 43%;
+  width: min(100vw, 820px);
+  aspect-ratio: 640 / 480;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 60px rgba(255, 70, 60, 0.4), 0 0 20px rgba(0, 0, 0, 0.95));
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  animation: cadejo-approach-strike 0.9s cubic-bezier(0.08, 0.8, 0.2, 1) both;
+}
+
+.cadejo-runner-static {
+  animation: none;
+  opacity: 0.78;
+  transform: translate(-50%, -50%);
+}
+
+.cadejo-caption {
+  position: absolute;
+  z-index: 2;
+  bottom: 15%;
+  margin: 0;
+  color: #d8e5dc;
+  font-family: Georgia, serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-align: center;
+}
+
+.cadejo-caption-voice {
+  animation: cadejo-voice-pulse 1.2s ease-in-out infinite alternate;
+}
+
+.cadejo-caption-storm {
+  color: #e1efff;
+  text-shadow: 0 0 18px rgba(155, 202, 245, 0.8);
+  animation: cadejo-storm-caption 1.85s ease both;
+}
+
+.cadejo-caption-attack {
+  animation: cadejo-threat 2.45s ease both;
+}
+
+.cadejo-transition-static .cadejo-caption {
+  animation: none;
+}
+
+.cadejo-rain {
+  position: absolute;
+  z-index: 1;
+  inset: -90%;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cadejo-lightning {
+  position: absolute;
+  z-index: 1;
+  top: 8%;
+  left: 48%;
+  width: 5px;
+  height: 210px;
+  background: #ecf6ff;
+  box-shadow: 0 0 12px 5px rgba(190, 224, 255, 0.75), 0 0 46px 18px rgba(111, 172, 228, 0.42);
+  clip-path: polygon(40% 0, 100% 0, 55% 44%, 100% 44%, 0 100%, 37% 53%, 0 53%);
+  opacity: 0;
+  transform: rotate(8deg);
+  animation: cadejo-bolt-strike 1.85s ease-out both;
+}
+
+.cadejo-trail {
+  position: absolute;
+  z-index: 1;
+  bottom: 16%;
+  left: 50%;
+  width: min(62vw, 420px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(224, 62, 52, 0.8), transparent);
+  transform: translateX(-50%);
+  animation: cadejo-impact-ring 2.45s ease both;
+}
+
+.cadejo-dodge-button {
+  position: absolute;
+  z-index: 3;
+  bottom: 7%;
+  display: flex;
+  min-width: 190px;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  border: 2px solid #fff0a8;
+  border-radius: 999px;
+  padding: 10px 22px;
+  background: #ef6b35;
+  box-shadow: 0 0 0 5px rgba(239, 107, 53, 0.2), 0 8px 24px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 800;
+  animation: cadejo-button-pop 0.8s ease both;
+}
+
+.cadejo-dodge-button span {
+  font-size: 0.62rem;
+  font-weight: 500;
+}
+
+.cadejo-dodge-button:hover:not(:disabled) {
+  background: #ff8b4e;
+  transform: scale(1.06);
+}
+
+.cadejo-dodge-button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+
+.cadejo-dodge-button:disabled {
+  cursor: default;
+}
+
+.cadejo-caption-dodged,
+.cadejo-caption-caught {
+  animation: none;
+  bottom: 18%;
+  opacity: 1;
+  font-size: clamp(0.78rem, 2.5vw, 1.05rem);
+  letter-spacing: 0.08em;
+}
+
+.cadejo-caption-dodged {
+  color: #fff0a8;
+  text-shadow: 0 0 20px rgba(57, 217, 138, 0.9);
+}
+
+.cadejo-caption-caught {
+  color: #ffdc86;
+  text-shadow: 0 0 18px rgba(239, 107, 53, 0.9);
+}
+
+.cadejo-transition-dodged {
+  animation: cadejo-dodge-scene 1.4s ease both;
+}
+
+.cadejo-transition-dodged::after {
+  background:
+    radial-gradient(circle at 48% 45%, rgba(255, 238, 137, 0.95) 0 2%, transparent 3%),
+    radial-gradient(circle at 55% 40%, rgba(80, 220, 170, 0.75) 0 1%, transparent 2%),
+    radial-gradient(circle at 43% 53%, rgba(255, 129, 71, 0.8) 0 1.5%, transparent 2.5%);
+  opacity: 1;
+  animation: cadejo-star-pop 1.4s ease both;
+}
+
+.cadejo-transition-dodged .cadejo-runner {
+  animation: cadejo-dodge-run 1.4s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+.cadejo-transition-dodged .cadejo-caption {
+  animation: none;
+}
+
+.cadejo-transition-dodged .cadejo-dodge-button {
+  background: #278a68;
+  border-color: #c2ffe4;
+  animation: none;
+}
+
+@keyframes cadejo-approach-strike {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.12) rotate(-9deg); filter: blur(18px) brightness(0.3); }
+  18% { opacity: 0.85; transform: translate(-50%, -50%) scale(0.42) rotate(-3deg); filter: blur(9px) brightness(0.65); }
+  42% { opacity: 1; transform: translate(-50%, -50%) scale(0.8) rotate(1deg); filter: blur(2px) brightness(0.82); }
+  68% { opacity: 1; transform: translate(-50%, -50%) scale(1.12) rotate(1.5deg); filter: blur(0) brightness(1.05); }
+  100% { opacity: 0.9; transform: translate(-50%, -48%) scale(1.35) rotate(2deg); filter: blur(4px) brightness(1.35); }
+}
+
+@keyframes cadejo-voice-pulse {
+  from { opacity: 0.55; text-shadow: 0 0 5px rgba(208, 226, 210, 0.12); }
+  to { opacity: 1; text-shadow: 0 0 18px rgba(208, 226, 210, 0.55); }
+}
+
+@keyframes cadejo-rain-fall {
+  from { background-position: 0 0, 12px -40px; }
+  to { background-position: -18px 110px, 12px 90px; }
+}
+
+@keyframes cadejo-lightning-flash {
+  0%, 24%, 36%, 100% { opacity: 0; }
+  26%, 29% { opacity: 0.86; }
+  42% { opacity: 0.18; }
+}
+
+@keyframes cadejo-bolt-strike {
+  0%, 23%, 38%, 100% { opacity: 0; }
+  25%, 31% { opacity: 0.92; }
+  35% { opacity: 0.18; }
+}
+
+@keyframes cadejo-storm-caption {
+  0%, 20% { opacity: 0; transform: translateY(10px); }
+  30%, 76% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; }
+}
+
+@keyframes cadejo-dodge-run {
+  0% { opacity: 1; transform: translate(0, 2vh) scale(1.2) rotate(0); filter: blur(0) brightness(1); }
+  32% { opacity: 1; transform: translate(-8vw, 0) scale(1.45) rotate(-12deg); }
+  100% { opacity: 0; transform: translate(115vw, -8vh) scale(0.55) rotate(24deg); filter: blur(8px) brightness(1.3); }
+}
+
+@keyframes cadejo-button-pop {
+  0%, 12% { opacity: 0; transform: translateY(18px) scale(0.7); pointer-events: none; }
+  18%, 78% { opacity: 1; transform: translateY(0) scale(1.04); pointer-events: auto; }
+  100% { opacity: 0; transform: translateY(8px) scale(0.96); pointer-events: none; }
+}
+
+@keyframes cadejo-dodge-scene {
+  0%, 28% { background-color: #030706; }
+  48% { background-color: #174636; }
+  100% { background-color: #030706; }
+}
+
+@keyframes cadejo-star-pop {
+  0% { opacity: 0; transform: scale(0.3) rotate(-10deg); }
+  35% { opacity: 1; transform: scale(1.25) rotate(8deg); }
+  100% { opacity: 0; transform: scale(2.2) rotate(20deg); }
+}
+
+@keyframes cadejo-scene-impact {
+  0%, 72% { transform: translate(0, 0); }
+  75% { transform: translate(-9px, 5px); }
+  78% { transform: translate(8px, -5px); }
+  81% { transform: translate(-6px, -3px); }
+  84% { transform: translate(4px, 3px); }
+  88%, 100% { transform: translate(0, 0); }
+}
+
+@keyframes cadejo-strike-flash {
+  0%, 73%, 90%, 100% { opacity: 0; }
+  76%, 82% { opacity: 0.72; }
+  86% { opacity: 0.2; }
+}
+
+@keyframes cadejo-threat {
+  0% { opacity: 0; transform: translateY(15px); text-shadow: 0 0 0 transparent; }
+  14%, 78% { opacity: 1; transform: translateY(0); text-shadow: 0 0 14px rgba(224, 62, 52, 0.45); }
+  82% { opacity: 1; transform: translateY(0) scale(1.08); text-shadow: 0 0 22px rgba(224, 62, 52, 0.85); }
+  100% { opacity: 0; transform: translateY(0) scale(1.08); }
+}
+
+@keyframes cadejo-impact-ring {
+  0%, 72% { opacity: 0; transform: translateX(-50%) scaleX(0.2); }
+  79% { opacity: 1; transform: translateX(-50%) scaleX(1.15); }
+  90%, 100% { opacity: 0; transform: translateX(-50%) scaleX(1.5); }
+}
+
+.cadejo-transition-static,
+.cadejo-transition-static::after {
+  animation: none;
+}
+
+.cadejo-transition-static::after {
+  opacity: 0;
+}
+

@@ -18,7 +18,7 @@ import {
 import StatCard from './StatCard'
 import { LineChart, BarChart, DonutChart } from './Charts'
 
-export default function OverviewView() {
+export default function OverviewView({ exportRequest = 0 }) {
   const [data, setData] = useState({
     kpis: null,
     monthly: [],
@@ -38,6 +38,31 @@ export default function OverviewView() {
       active = false
     }
   }, [])
+
+  useEffect(() => {
+    if (!exportRequest || !data.kpis) return
+
+    const rows = [
+      ['Indicador', 'Valor'],
+      ['Usuarios registrados', data.kpis.totalUsers],
+      ['Usuarios activos en 7 dias', data.kpis.activeUsers7d],
+      ['Visitas al mapa', data.kpis.mapVisits],
+      ['Publicaciones del foro', data.kpis.forumPosts],
+      ['Comentarios del foro', data.kpis.forumComments],
+      ['Lecturas de leyendas', data.kpis.legendViews],
+      ['Duracion promedio de sesion (minutos)', data.kpis.avgSessionMinutes],
+      ['Nuevos usuarios este mes', data.kpis.newUsersThisMonth],
+    ]
+    const csv = rows.map((row) => row.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(',')).join('\r\n')
+    const url = URL.createObjectURL(new Blob([`\ufeff${csv}`], { type: 'text/csv;charset=utf-8' }))
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `indicadores-admin-${new Date().toISOString().slice(0, 10)}.csv`
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    URL.revokeObjectURL(url)
+  }, [exportRequest, data.kpis])
 
   if (!data.kpis) {
     return (

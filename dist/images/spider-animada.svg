@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Araña gigante realista" fill="none">
+  <defs>
+    <radialGradient id="bgGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(320 220) rotate(90) scale(210 250)">
+      <stop stop-color="#3C1417"/>
+      <stop offset="0.52" stop-color="#1B0B11"/>
+      <stop offset="1" stop-color="#08090B"/>
+    </radialGradient>
+    <linearGradient id="bodyGrad" x1="170" y1="80" x2="460" y2="350" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#757B83"/>
+      <stop offset="0.25" stop-color="#3E434B"/>
+      <stop offset="0.7" stop-color="#171B20"/>
+      <stop offset="1" stop-color="#090B0E"/>
+    </linearGradient>
+    <linearGradient id="abdomenGrad" x1="250" y1="220" x2="420" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8D939A"/>
+      <stop offset="0.35" stop-color="#2E3239"/>
+      <stop offset="1" stop-color="#0F1215"/>
+    </linearGradient>
+    <linearGradient id="legGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#B1B7BC"/>
+      <stop offset="0.25" stop-color="#646B73"/>
+      <stop offset="0.72" stop-color="#262C32"/>
+      <stop offset="1" stop-color="#101518"/>
+    </linearGradient>
+    <radialGradient id="eyeGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0) scale(12 12)">
+      <stop stop-color="#fff8cf"/>
+      <stop offset="0.3" stop-color="#FFF0A9"/>
+      <stop offset="0.7" stop-color="#ffb86a"/>
+      <stop offset="1" stop-color="#f26a2f"/>
+    </radialGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      .spider-body { transform-box: fill-box; transform-origin: 50% 55%; animation: spider-bob 1.1s ease-in-out infinite alternate; }
+      .spider-leg-left { transform-box: fill-box; transform-origin: 50% 0%; animation: spider-leg-left 0.95s ease-in-out infinite alternate; }
+      .spider-leg-right { transform-box: fill-box; transform-origin: 50% 0%; animation: spider-leg-right 0.95s ease-in-out infinite alternate; }
+      .spider-leg-top { transform-box: fill-box; transform-origin: 50% 0%; animation: spider-leg-top 0.9s ease-in-out infinite alternate; }
+      .spider-eye { animation: spider-eye 1.2s ease-in-out infinite alternate; }
+      .spider-web { opacity: 0.26; animation: spider-web 3s ease-in-out infinite alternate; }
+      @keyframes spider-bob { 0% { transform: translateY(0px) rotate(-2deg); } 100% { transform: translateY(-10px) rotate(2deg); } }
+      @keyframes spider-leg-left { 0% { transform: rotate(-14deg) translateY(2px); } 100% { transform: rotate(8deg) translateY(-2px); } }
+      @keyframes spider-leg-right { 0% { transform: rotate(8deg) translateY(-2px); } 100% { transform: rotate(-14deg) translateY(2px); } }
+      @keyframes spider-leg-top { 0% { transform: rotate(-8deg); } 100% { transform: rotate(6deg); } }
+      @keyframes spider-eye { 0% { opacity: 0.72; filter: drop-shadow(0 0 10px rgba(255, 188, 108, 0.25)); } 100% { opacity: 1; filter: drop-shadow(0 0 17px rgba(255, 188, 108, 0.7)); } }
+      @keyframes spider-web { 0% { opacity: 0.18; transform: scale(0.98); } 100% { opacity: 0.34; transform: scale(1.06); } }
+      @media (prefers-reduced-motion: reduce) { .spider-body, .spider-leg-left, .spider-leg-right, .spider-leg-top, .spider-eye, .spider-web { animation: none !important; } }
+    </style>
+  </defs>
+
+  <circle cx="320" cy="220" r="190" fill="url(#bgGlow)" opacity="0.96"/>
+
+  <g class="spider-web">
+    <path d="M320 30V390M120 128C178 174 227 210 320 220C413 210 462 174 520 128M120 332C180 290 235 252 320 252C405 252 460 290 520 332" stroke="#E6EAF7" stroke-opacity="0.26" stroke-width="2"/>
+    <path d="M165 65L248 220L165 392M475 65L392 220L475 392M92 180L258 220L92 300M548 180L392 220L548 300" stroke="#E7EAF7" stroke-opacity="0.18" stroke-width="2"/>
+  </g>
+
+  <g class="spider-body">
+    <ellipse cx="320" cy="228" rx="120" ry="98" fill="url(#abdomenGrad)"/>
+    <ellipse cx="320" cy="140" rx="72" ry="62" fill="url(#bodyGrad)"/>
+    <ellipse cx="320" cy="314" rx="100" ry="54" fill="#0C1015"/>
+    <ellipse cx="320" cy="234" rx="90" ry="74" fill="none" stroke="#A8B0B8" stroke-opacity="0.18" stroke-width="2"/>
+
+    <g class="spider-eye" filter="url(#glow)">
+      <circle cx="293" cy="144" r="8.5" fill="url(#eyeGlow)"/>
+      <circle cx="347" cy="144" r="8.5" fill="url(#eyeGlow)"/>
+      <circle cx="293" cy="144" r="2.8" fill="#1c0d05"/>
+      <circle cx="347" cy="144" r="2.8" fill="#1c0d05"/>
+    </g>
+
+    <path d="M258 174C271 195 289 205 320 208C351 205 369 195 382 174" stroke="#D8D3CC" stroke-opacity="0.26" stroke-width="3" stroke-linecap="round"/>
+    <path d="M272 246C289 260 303 268 320 270C337 268 351 260 368 246" stroke="#A8A39A" stroke-opacity="0.52" stroke-width="4" stroke-linecap="round"/>
+    <path d="M286 172L246 198M354 172L394 198" stroke="#232A2F" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <g class="spider-leg-left">
+    <path d="M230 170L152 118" stroke="url(#legGrad)" stroke-width="7.5" stroke-linecap="round"/>
+    <path d="M212 195L116 170" stroke="url(#legGrad)" stroke-width="7.5" stroke-linecap="round"/>
+    <path d="M214 224L126 244" stroke="url(#legGrad)" stroke-width="7.5" stroke-linecap="round"/>
+    <path d="M242 258L175 328" stroke="url(#legGrad)" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <g class="spider-leg-right">
+    <path d="M410 170L488 118" stroke="url(#legGrad)" stroke-width="7.5" stroke-linecap="round"/>
+    <path d="M428 195L524 170" stroke="url(#legGrad)" stroke-width="7.5" stroke-linecap="round"/>
+    <path d="M426 224L514 244" stroke="url(#legGrad)" stroke-width="7.5" stroke-linecap="round"/>
+    <path d="M398 258L465 328" stroke="url(#legGrad)" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <g class="spider-leg-top">
+    <path d="M262 128L204 70" stroke="url(#legGrad)" stroke-width="6.8" stroke-linecap="round"/>
+    <path d="M292 118L290 44" stroke="url(#legGrad)" stroke-width="6.8" stroke-linecap="round"/>
+    <path d="M350 118L352 44" stroke="url(#legGrad)" stroke-width="6.8" stroke-linecap="round"/>
+    <path d="M378 128L436 70" stroke="url(#legGrad)" stroke-width="6.8" stroke-linecap="round"/>
+  </g>
+
+  <g opacity="0.82">
+    <path d="M150 94C182 68 203 82 220 101" stroke="#F0EAF4" stroke-opacity="0.26" stroke-width="2" stroke-linecap="round"/>
+    <path d="M490 94C458 68 437 82 420 101" stroke="#F0EAF4" stroke-opacity="0.26" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>

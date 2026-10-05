@@ -15,6 +15,7 @@ import { getUsers } from './dbService'
 
 const POSTS_KEY = 'forum-posts'
 const COMMENTS_KEY = 'forum-comments'
+const COMMENT_LIKES_KEY = 'forum-comment-likes'
 
 /** Estados posibles de una publicacion. */
 export const POST_STATUS = {
@@ -43,6 +44,16 @@ function persistPost(post) {
 function persistComment(comment) {
   const local = readValue(COMMENTS_KEY, [])
   writeValue(COMMENTS_KEY, [...local, comment])
+}
+
+function getCommentLikeState() {
+  return readValue(COMMENT_LIKES_KEY, {})
+}
+
+function applyCommentLikeCount(comment) {
+  const state = getCommentLikeState()[comment.id]
+  const localLikes = state && Array.isArray(state.users) ? state.users.length : 0
+  return { ...comment, likes: Number(comment.likes || 0) + localLikes }
 }
 
 /**
@@ -108,6 +119,7 @@ export async function getPostWithComments(postId) {
 
   const comments = getAllComments()
     .filter((comment) => comment.postId === postId && comment.status === 'visible')
+    .map(applyCommentLikeCount)
     .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
 
   return { post, comments }
@@ -154,7 +166,7 @@ export async function createPost({ authorId, title, body, categoryId, tags, rela
 }
 
 /** Crea un comentario en una publicacion. */
-export async function createComment({ postId, authorId, body }) {
+export async function createComment({ postId, authorId, body, parentId = null }) {
   const cleanBody = String(body || '').trim()
   if (cleanBody.length < 3) throw new Error('El comentario es demasiado corto.')
 
@@ -165,11 +177,41 @@ export async function createComment({ postId, authorId, body }) {
     body: cleanBody,
     createdAt: new Date().toISOString(),
     likes: 0,
+    parentId,
     status: 'visible',
   }
 
   persistComment(comment)
   return comment
+}
+
+/** Son usuarios pueden dar me gusta a un comentario una sola vez. */
+export async function toggleCommentLike(commentId, userId) {
+  const comments = getAllComments()
+  const comment = comments.find((item) => item.id === commentId)
+
+  if (!comment) {
+    return { success: false, likes: 0, message: 'No existe este comentario.' }
+  }
+
+  const state = getCommentLikeState()
+  const currentState = state[commentId] || { users: [] }
+
+  if (currentState.users.includes(userId)) {
+    const total = Number(comment.likes || 0) + currentState.users.length
+    return { success: false, likes: total, message: 'Ya diste me gusta a este comentario.' }
+  }
+
+  const nextState = {
+    ...currentState,
+    users: [...currentState.users, userId],
+  }
+
+  state[commentId] = nextState
+  writeValue(COMMENT_LIKES_KEY, state)
+
+  const totalLikes = Number(comment.likes || 0) + nextState.users.length
+  return { success: true, likes: totalLikes }
 }
 
 /** Marca "me gusta" en una publicacion (solo registros locales nuevos). */

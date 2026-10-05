@@ -129,6 +129,71 @@ function normalizeProjection(result, factors, model) {
   }
 }
 
+function clamp01(value) {
+  return Math.min(Math.max(Number(value) || 0, 0), 1)
+}
+
+function buildLocalProjection(user, factors, database) {
+  const stats = user?.stats || { posts: 0, comments: 0, legendsVisited: 0 }
+  const engagement = clamp01(factors?.engagement ?? ((stats.comments * 0.4 + stats.posts * 2.5 + stats.legendsVisited * 1.2) / 160))
+  const reputation = clamp01((user?.reputation || 0) / 3000)
+  const daysActive = Math.max(0, Math.floor((Date.now() - new Date(user?.joinedAt || Date.now()).getTime()) / 86400000))
+  const retention = clamp01(0.35 + reputation * 0.4 + Math.min(daysActive / 730, 0.25))
+  const contentSupply = clamp01(factors?.contentSupply ?? ((stats.posts * 3 + (user?.reputation || 0) * 0.3) / 80))
+  const normalized = { engagement, retention, contentSupply }
+  const weights = database.aiConfig.weights || { engagement: 0.45, retention: 0.3, contentSupply: 0.25 }
+  const baseScore =
+    normalized.engagement * weights.engagement +
+    normalized.retention * weights.retention +
+    normalized.contentSupply * weights.contentSupply
+
+  const growthRate = 0.08 + baseScore * 0.35
+  const months = [1, 2, 3]
+  const series = months.map((month) => {
+    const value = 1 * (1 + growthRate) ** month
+    return {
+      month: `Mes +${month}`,
+      activeUsers: Math.round(120 * value),
+      posts: Math.round(18 * value),
+      engagement: Number((0.35 + baseScore * 0.5).toFixed(3)),
+    }
+  })
+
+  const riskLevel = baseScore > 0.66 ? 'alto' : baseScore > 0.38 ? 'medio' : 'bajo'
+  return {
+    model: 'local-estimator-fallback',
+    generatedAt: new Date().toISOString(),
+    horizonDays: Number(database.aiConfig.horizons?.[1]) || 60,
+    growthRate: Number((growthRate * 100).toFixed(1)),
+    projectedReach: series[2].activeUsers,
+    confidence: Number(Math.min(Math.max(0.68 + baseScore * 0.2, 0.4), 0.96).toFixed(2)),
+    riskLevel,
+    factors: normalized,
+    series,
+    recommendations: [
+      {
+        id: 'fallback-1',
+        title: 'Publica de manera constante',
+        detail: 'Mantén una frecuencia semanal para mejorar el crecimiento proyectado de tu perfil.',
+        impact: 'alto',
+      },
+      {
+        id: 'fallback-2',
+        title: 'Participa en debates activos',
+        detail: 'Responder testimonios y debates aumenta la participación y la visibilidad del perfil.',
+        impact: 'medio',
+      },
+      {
+        id: 'fallback-3',
+        title: 'Explora leyendas de riesgo medio y alto',
+        detail: 'Aumentar la interacción con ubicaciones relevantes y contenido de riesgo puede reforzar la retención.',
+        impact: 'bajo',
+      },
+    ],
+    disclaimer: 'La API de DeepSeek no está disponible o no tiene saldo suficiente; esta estimación es una proyección local para mantener la funcionalidad del panel.',
+  }
+}
+
 async function generateDeepSeekProjection(request, user, database, apiKey) {
   if (!apiKey) {
     const error = new Error('Configura DEEPSEEK_API_KEY en el archivo .env del proyecto y reinicia el servidor.')
@@ -176,6 +241,11 @@ async function generateDeepSeekProjection(request, user, database, apiKey) {
     const payload = await response.json()
     if (!response.ok) {
       const message = payload.error?.message || `DeepSeek respondió con estado ${response.status}.`
+      const isBalanceIssue = /insufficient balance|balance|credit|quota|billing|subscription/i.test(message)
+      if (isBalanceIssue) {
+        return buildLocalProjection(user, factors, database)
+      }
+
       const error = new Error(message)
       error.status = response.status === 429 ? 429 : 502
       throw error
@@ -183,7 +253,17 @@ async function generateDeepSeekProjection(request, user, database, apiKey) {
 
     const content = payload.choices?.[0]?.message?.content
     if (typeof content !== 'string') throw new Error('DeepSeek devolvió una respuesta vacía.')
-    return normalizeProjection(parseModelJson(content), factors, payload.model || 'deepseek-chat')
+    try {
+      return normalizeProjection(parseModelJson(content), factors, payload.model || 'deepseek-chat')
+    } catch {
+      return buildLocalProjection(user, factors, database)
+    }
+  } catch (error) {
+    const isDeepSeekFailure = /insufficient balance|quota|billing|credit|fetch failed|deepseek|network|timeout/i.test(String(error?.message || ''))
+    if (isDeepSeekFailure) {
+      return buildLocalProjection(user, factors, database)
+    }
+    throw error
   } finally {
     clearTimeout(timeout)
   }

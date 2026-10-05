@@ -12,7 +12,7 @@ import { useToast } from '../../context/ToastContext'
 
 const ROLE_COLORS = { usuario: 'var(--accent)', moderador: 'var(--color-alert)', admin: 'var(--color-danger)' }
 
-export default function UsersView() {
+export default function UsersView({ openCreateRequest = 0 }) {
   const [users, setUsers] = useState([])
   const [roles, setRoles] = useState([])
   const [search, setSearch] = useState('')
@@ -21,6 +21,10 @@ export default function UsersView() {
   const [creating, setCreating] = useState(false)
   const [newUser, setNewUser] = useState({ displayName: '', username: '', email: '', password: '', province: 'San José', role: 'usuario' })
   const toast = useToast()
+
+  useEffect(() => {
+    if (openCreateRequest > 0) setCreateOpen(true)
+  }, [openCreateRequest])
 
   useEffect(() => {
     Promise.all([getUsers(), getRoles()]).then(([list, roleList]) => {

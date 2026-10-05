@@ -151,7 +151,7 @@ function exportReport(format, report, rows) {
   downloadFile(html, 'text/html;charset=utf-8', 'html')
 }
 
-export default function ProjectionsView() {
+export default function ProjectionsView({ generateRequest = 0 }) {
   const { user } = useAuth()
   const toast = useToast()
   const [usageStats, setUsageStats] = useState({ used: 0, limit: 10, remaining: 10 })
@@ -189,6 +189,10 @@ export default function ProjectionsView() {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    if (generateRequest > 0) runProjection()
+  }, [generateRequest])
 
   const usedPercent = usageStats.limit > 0 ? (usageStats.used / usageStats.limit) * 100 : 0
   const report = createReport(user, usageStats, aggregate, projection)

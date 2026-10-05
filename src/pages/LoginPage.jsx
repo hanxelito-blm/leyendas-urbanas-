@@ -9,7 +9,7 @@
  * -----------------------------------------------------------------------------
  */
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
@@ -43,15 +43,145 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [demoOpen, setDemoOpen] = useState(false)
+  const [showCadejo, setShowCadejo] = useState(false)
+  const [staticCadejo, setStaticCadejo] = useState(false)
+  const [cadejoPhase, setCadejoPhase] = useState('voice')
+  const [cadejoDodged, setCadejoDodged] = useState(false)
+  const [cadejoCaught, setCadejoCaught] = useState(false)
+  const navigationTimer = useRef(null)
+  const destinationRef = useRef('/')
+
+  const playThunderAndRain = () => {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext
+    if (!AudioContextClass) return
+
+    try {
+      const audioContext = new AudioContextClass()
+      const now = audioContext.currentTime
+      const noiseBuffer = audioContext.createBuffer(1, Math.ceil(audioContext.sampleRate * 2.4), audioContext.sampleRate)
+      const noise = noiseBuffer.getChannelData(0)
+      for (let index = 0; index < noise.length; index += 1) noise[index] = Math.random() * 2 - 1
+
+      const rainSource = audioContext.createBufferSource()
+      rainSource.buffer = noiseBuffer
+      const rainFilter = audioContext.createBiquadFilter()
+      rainFilter.type = 'highpass'
+      rainFilter.frequency.value = 1700
+      const rainGain = audioContext.createGain()
+      rainGain.gain.setValueAtTime(0.001, now)
+      rainGain.gain.linearRampToValueAtTime(0.055, now + 0.2)
+      rainGain.gain.linearRampToValueAtTime(0.001, now + 2.35)
+      rainSource.connect(rainFilter).connect(rainGain).connect(audioContext.destination)
+      rainSource.start(now)
+      rainSource.stop(now + 2.4)
+
+      const thunderSource = audioContext.createBufferSource()
+      thunderSource.buffer = noiseBuffer
+      const thunderFilter = audioContext.createBiquadFilter()
+      thunderFilter.type = 'lowpass'
+      thunderFilter.frequency.setValueAtTime(950, now + 0.08)
+      thunderFilter.frequency.exponentialRampToValueAtTime(65, now + 1.8)
+      const thunderGain = audioContext.createGain()
+      thunderGain.gain.setValueAtTime(0.001, now)
+      thunderGain.gain.linearRampToValueAtTime(0.34, now + 0.1)
+      thunderGain.gain.exponentialRampToValueAtTime(0.001, now + 1.9)
+      thunderSource.connect(thunderFilter).connect(thunderGain).connect(audioContext.destination)
+      thunderSource.start(now + 0.08)
+      thunderSource.stop(now + 2)
+
+      const rumble = audioContext.createOscillator()
+      const rumbleGain = audioContext.createGain()
+      rumble.type = 'sine'
+      rumble.frequency.setValueAtTime(58, now + 0.08)
+      rumble.frequency.exponentialRampToValueAtTime(32, now + 1.6)
+      rumbleGain.gain.setValueAtTime(0.001, now)
+      rumbleGain.gain.linearRampToValueAtTime(0.14, now + 0.12)
+      rumbleGain.gain.exponentialRampToValueAtTime(0.001, now + 1.8)
+      rumble.connect(rumbleGain).connect(audioContext.destination)
+      rumble.start(now + 0.08)
+      rumble.stop(now + 1.9)
+
+      audioContext.resume().catch(() => {})
+      window.setTimeout(() => audioContext.close().catch(() => {}), 2800)
+    } catch {
+      // Si el navegador no permite sintetizar audio, la escena visual continua.
+    }
+  }
 
   // Carga provincias para el selector de registro.
   useEffect(() => {
     getProvinces().then(setProvinces)
   }, [])
 
+  useEffect(() => () => {
+    if (navigationTimer.current) window.clearTimeout(navigationTimer.current)
+  }, [])
+
+  useEffect(() => {
+    if (!showCadejo || staticCadejo) return undefined
+
+    if (cadejoPhase === 'attack') {
+      playThunderAndRain()
+      navigationTimer.current = window.setTimeout(
+        () => navigate(destinationRef.current, { replace: true }),
+        500
+      )
+      return () => window.clearTimeout(navigationTimer.current)
+    }
+
+    return undefined
+  }, [showCadejo, staticCadejo, cadejoPhase, navigate])
+
+  const dodgeCadejo = () => {
+    if (!showCadejo || staticCadejo || cadejoPhase !== 'attack' || cadejoDodged || cadejoCaught) return
+
+    setCadejoDodged(true)
+    if (navigationTimer.current) window.clearTimeout(navigationTimer.current)
+    navigationTimer.current = window.setTimeout(
+      () => navigate(destinationRef.current, { replace: true }),
+      400
+    )
+  }
+
+  const skipCadejo = () => {
+    if (navigationTimer.current) window.clearTimeout(navigationTimer.current)
+    if (window.speechSynthesis) window.speechSynthesis.cancel()
+    navigate(destinationRef.current, { replace: true })
+  }
+
+  useEffect(() => {
+    if (!showCadejo || staticCadejo || cadejoPhase !== 'attack') return undefined
+
+    const handleDodgeKey = (event) => {
+      if (event.code !== 'Space' || event.repeat) return
+      event.preventDefault()
+      dodgeCadejo()
+    }
+
+    window.addEventListener('keydown', handleDodgeKey)
+    return () => window.removeEventListener('keydown', handleDodgeKey)
+  }, [showCadejo, staticCadejo, cadejoPhase, cadejoDodged, cadejoCaught])
+
   const handleChange = (field) => (event) => {
     setForm((prev) => ({ ...prev, [field]: event.target.value }))
     setError('')
+  }
+
+  const triggerSpiderScare = (destination) => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    destinationRef.current = destination
+    setCadejoDodged(false)
+    setCadejoCaught(false)
+    setCadejoPhase(reduceMotion ? 'static' : 'attack')
+    setStaticCadejo(reduceMotion)
+    setShowCadejo(true)
+
+    if (reduceMotion) {
+      navigationTimer.current = window.setTimeout(
+        () => navigate(destination, { replace: true }),
+        300
+      )
+    }
   }
 
   const handleSubmit = async (event) => {
@@ -59,38 +189,38 @@ export default function LoginPage() {
     setSubmitting(true)
     setError('')
 
-    // Validación de confirmación de contraseña en registro
-    if (mode === 'register' && form.password !== form.confirmPassword) {
-      setError('Las contraseñas no coinciden.')
+    try {
+      if (mode === 'register' && form.password !== form.confirmPassword) {
+        setError('Las contraseñas no coinciden.')
+        return
+      }
+
+      const result = mode === 'login'
+        ? await login({ identifier: form.identifier, password: form.password })
+        : await register({
+            username: form.identifier,
+            email: form.email,
+            password: form.password,
+            displayName: form.displayName,
+            province: form.province,
+            identificacion: form.identificacion,
+            birthDate: form.birthDate,
+          })
+
+      if (!result.success) {
+        setError(result.message)
+        return
+      }
+
+      toast.success(`Bienvenido, ${result.user.displayName}`, 'Tu sesion se inicio correctamente.')
+      const destination = location.state?.from || '/'
+      triggerSpiderScare(destination)
+      return
+    } catch {
+      setError('No se pudo completar el inicio de sesión. Inténtalo de nuevo.')
+    } finally {
       setSubmitting(false)
-      return
     }
-
-    let result
-    if (mode === 'login') {
-      result = await login({ identifier: form.identifier, password: form.password })
-    } else {
-      result = await register({
-        username: form.identifier,
-        email: form.email,
-        password: form.password,
-        displayName: form.displayName,
-        province: form.province,
-        identificacion: form.identificacion,
-        birthDate: form.birthDate,
-      })
-    }
-
-    setSubmitting(false)
-
-    if (!result.success) {
-      setError(result.message)
-      return
-    }
-
-    toast.success(`Bienvenido, ${result.user.displayName}`, 'Tu sesion se inicio correctamente.')
-    const destination = location.state?.from || '/'
-    navigate(destination, { replace: true })
   }
 
   const fillDemo = (username) => {
@@ -336,6 +466,52 @@ const resetForm = () => {
           Los roles Moderador y Administrador se asignan desde el panel interno.
         </p>
       </div>
+
+      {showCadejo && (
+        <div
+          className={`cadejo-transition cadejo-transition-${cadejoPhase}${cadejoDodged ? ' cadejo-transition-dodged' : ''}`}
+          role="status"
+          aria-live="assertive"
+        >
+          <button type="button" className="cadejo-skip-button" onClick={skipCadejo}>
+            Omitir
+          </button>
+          {(cadejoPhase === 'attack' || staticCadejo) && (
+            <img
+              className={`cadejo-runner${staticCadejo ? ' cadejo-runner-static' : ''}`}
+              src="/images/spider-animada.svg"
+              alt="Araña gigante"
+              onError={(event) => {
+                event.currentTarget.style.opacity = '0.7'
+              }}
+              onAnimationEnd={(event) => {
+                if (event.animationName === 'cadejo-approach-strike' && !cadejoDodged) setCadejoCaught(true)
+              }}
+            />
+          )}
+          <p className={`cadejo-caption cadejo-caption-${cadejoPhase}${cadejoDodged ? ' cadejo-caption-dodged' : ''}${cadejoCaught ? ' cadejo-caption-caught' : ''}`}>
+            {cadejoPhase === 'voice'
+              ? 'SE ESCUCHA UN RUIDO EN LA OSCURIDAD'
+              : cadejoPhase === 'storm'
+                ? 'LA NOCHE SE TENSA...'
+                : staticCadejo
+                  ? 'BIENVENIDO AL ARCHIVO'
+                  : cadejoDodged
+                    ? '¡BUEN MOVIMIENTO! LA ARAÑA SE RETIRÓ'
+                    : cadejoCaught
+                      ? '¡PUM! YA ESTABAS DENTRO'
+                      : '¡ESQUIVA A LA ARAÑA!'}
+          </p>
+          {cadejoPhase === 'storm' && <span className="cadejo-lightning" aria-hidden="true" />}
+          {cadejoPhase === 'attack' && !cadejoCaught && (
+            <button type="button" className="cadejo-dodge-button" onClick={dodgeCadejo} disabled={cadejoDodged}>
+              {cadejoDodged ? '¡Esquivado!' : '¡Esquivar!'}
+              {!cadejoDodged && <span>Barra espaciadora</span>}
+            </button>
+          )}
+          {cadejoPhase === 'attack' && !staticCadejo && <span className="cadejo-trail" aria-hidden="true" />}
+        </div>
+      )}
     </div>
   )
 }

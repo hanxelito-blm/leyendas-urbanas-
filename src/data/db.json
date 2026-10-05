@@ -191,6 +191,30 @@
       "age": 122,
       "isAdult": true,
       "birthDate": "1904-01-01"
+    },
+    {
+      "id": "u-5a900699-c757-4624-a8d2-390b71b2ee67",
+      "username": "boli",
+      "email": "bolivarfwd@gmail.com",
+      "passwordHash": "scrypt:1873e7d5ed0a51bd309f9d3eb2ca7635:88c386ff7615c5a7c4d2d387350231d4eb862f049b30a36701125982a4e3b543d9249b921b0f4bb976dfe5ee7c6f7992da813fbef3bcb486eb5937262c7fe14a",
+      "displayName": "bolivar",
+      "role": "usuario",
+      "avatar": "/images/la-segua.jpg",
+      "bio": "Nuevo miembro de la comunidad de LEYENDAS CR.",
+      "province": "Puntarenas",
+      "joinedAt": "2026-10-05",
+      "reputation": 0,
+      "badges": [
+        "Nuevo miembro"
+      ],
+      "stats": {
+        "posts": 0,
+        "comments": 0,
+        "legendsVisited": 0
+      },
+      "age": 122,
+      "isAdult": true,
+      "birthDate": "1904-01-01"
     }
   ],
   "legends": [
