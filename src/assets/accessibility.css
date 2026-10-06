@@ -321,8 +321,25 @@ body {
   font-size: 0.78rem;
   padding: 0.62rem 1.15rem;
   cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
-  border: 1px solid transparent;
+  position: relative;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid rgba(192, 160, 92, 0.9);
+  box-shadow:
+    inset 0 0 0 1px rgba(245, 232, 198, 0.18),
+    0 0 0 1px rgba(11, 16, 12, 0.94),
+    0 0 0 3px rgba(68, 46, 22, 0.28),
+    0 8px 22px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(159, 130, 63, 0.18);
+}
+
+.btn-base:hover:not(:disabled) {
+  border-color: rgba(234, 204, 120, 0.95);
+  box-shadow:
+    inset 0 0 0 1px rgba(245, 232, 198, 0.36),
+    0 0 0 1px rgba(13, 21, 17, 0.96),
+    0 0 0 3px rgba(68, 46, 22, 0.32),
+    0 10px 26px rgba(0, 0, 0, 0.48),
+    0 0 24px rgba(159, 130, 63, 0.22);
 }
 
 .btn-base:disabled {
@@ -332,24 +349,37 @@ body {
 
 .btn-accent {
   background: var(--accent-soft);
-  border-color: var(--accent);
+  border-color: rgba(191, 158, 82, 0.92);
   color: var(--accent);
+  box-shadow:
+    inset 0 0 0 1px rgba(245, 232, 198, 0.12),
+    0 0 0 1px rgba(11, 16, 12, 0.94),
+    0 0 0 3px rgba(80, 50, 20, 0.25),
+    0 0 20px rgba(0, 245, 212, 0.12),
+    0 8px 22px rgba(0, 0, 0, 0.36);
 }
 
 .btn-accent:hover:not(:disabled) {
   background: var(--accent);
   color: var(--bg-base);
   transform: translateY(-1px);
+  border-color: rgba(233, 197, 110, 0.96);
+  box-shadow:
+    inset 0 0 0 1px rgba(245, 232, 198, 0.3),
+    0 0 0 1px rgba(11, 16, 12, 0.96),
+    0 0 0 3px rgba(80, 50, 20, 0.3),
+    0 0 26px rgba(0, 245, 212, 0.18),
+    0 10px 26px rgba(0, 0, 0, 0.38);
 }
 
 .btn-ghost {
   background: transparent;
-  border-color: var(--border-soft);
+  border-color: rgba(180, 150, 80, 0.8);
   color: var(--text-secondary);
 }
 
 .btn-ghost:hover:not(:disabled) {
-  border-color: var(--accent);
+  border-color: rgba(224, 196, 115, 0.95);
   color: var(--accent);
 }
 
@@ -357,11 +387,25 @@ body {
   background: var(--accent);
   color: var(--bg-base);
   font-weight: 700;
+  border-color: rgba(219, 182, 98, 0.9);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(10, 18, 14, 0.95),
+    0 0 0 3px rgba(83, 54, 15, 0.28),
+    0 8px 22px rgba(0, 0, 0, 0.38),
+    0 0 22px rgba(0, 245, 212, 0.12);
 }
 
 .btn-solid:hover:not(:disabled) {
   background: var(--accent-strong);
   transform: translateY(-1px);
+  border-color: rgba(236, 205, 125, 0.96);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 0 0 1px rgba(10, 18, 14, 0.95),
+    0 0 0 3px rgba(83, 54, 15, 0.32),
+    0 10px 26px rgba(0, 0, 0, 0.42),
+    0 0 28px rgba(0, 245, 212, 0.16);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
